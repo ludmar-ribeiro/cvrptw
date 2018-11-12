@@ -5,6 +5,8 @@ import static com.lud.delivery.cvrptw.common.api.config.ApiConfig.API_VERSION;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lud.delivery.cvrptw.common.exception.ObjectExistsForIdException;
-import com.lud.delivery.cvrptw.common.exception.NotFoundException;
 import com.lud.delivery.cvrptw.restaurant.domain.Restaurant;
 import com.lud.delivery.cvrptw.restaurant.service.RestaurantService;
 
@@ -27,12 +27,12 @@ public class RestaurantController{
     private RestaurantService service;
 
     @PostMapping
-    public void create(@RequestBody Restaurant restaurant) throws ObjectExistsForIdException {
+    public void create(@RequestBody @Valid Restaurant restaurant) {
         service.create(restaurant);
     }
 
     @PutMapping
-    public void update(@RequestBody Restaurant restaurant) throws NotFoundException {
+    public void update(@RequestBody @Valid Restaurant restaurant) {
         service.update(restaurant);
     }
 
@@ -42,7 +42,7 @@ public class RestaurantController{
     }
 
     @GetMapping("{id}")
-    public Restaurant get(@PathVariable Integer id) throws NotFoundException{
+    public Restaurant get(@PathVariable Integer id) {
         return service.get(id);
     }
 

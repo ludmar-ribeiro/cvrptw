@@ -6,9 +6,10 @@ import static com.lud.delivery.cvrptw.common.api.config.ApiConfig.API_VERSION;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,12 +32,12 @@ public class OrderController {
     private OrderService service;
 
     @PostMapping
-    public void create(@RequestBody Order order) throws ObjectExistsForIdException{
+    public void create(@RequestBody @Valid Order order) throws ObjectExistsForIdException{
         service.create(order);
     }
 
     @PutMapping
-    public void update(@RequestBody Order order) throws NotFoundException{
+    public void update(@RequestBody @Valid Order order) throws NotFoundException{
         service.update(order);
     }
 

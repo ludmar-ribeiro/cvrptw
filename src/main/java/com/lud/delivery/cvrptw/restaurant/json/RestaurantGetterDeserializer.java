@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.lud.delivery.cvrptw.common.exception.NotFoundException;
 import com.lud.delivery.cvrptw.restaurant.domain.Restaurant;
 import com.lud.delivery.cvrptw.restaurant.service.RestaurantService;
 
@@ -25,10 +24,6 @@ public class RestaurantGetterDeserializer extends JsonDeserializer<Restaurant>{
 
         Integer id = Integer.valueOf(parser.getIntValue());
 
-        try {
-            return service.get(id);
-        } catch (NotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        return service.get(id);
     }
 }

@@ -5,6 +5,8 @@ import static com.lud.delivery.cvrptw.common.api.config.ApiConfig.API_VERSION;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lud.delivery.cvrptw.client.domain.Client;
 import com.lud.delivery.cvrptw.client.service.ClientService;
-import com.lud.delivery.cvrptw.common.exception.NotFoundException;
-import com.lud.delivery.cvrptw.common.exception.ObjectExistsForIdException;
 
 @RestController
 @RequestMapping(API + API_VERSION + "client")
@@ -27,12 +27,12 @@ public class ClientController {
     private ClientService service;
 
     @PostMapping
-    public void create(@RequestBody Client client) throws ObjectExistsForIdException{
+    public void create(@RequestBody @Valid Client client) {
         service.create(client);
     }
 
     @PutMapping
-    public void update(@RequestBody Client client) throws NotFoundException{
+    public void update(@RequestBody @Valid Client client) {
         service.update(client);
     }
 
@@ -42,7 +42,7 @@ public class ClientController {
     }
 
     @GetMapping("{id}")
-    public Client get(@PathVariable Integer id) throws NotFoundException {
+    public Client get(@PathVariable Integer id) {
         return service.get(id);
     }
 }

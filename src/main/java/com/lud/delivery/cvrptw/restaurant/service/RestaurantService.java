@@ -16,21 +16,21 @@ public class RestaurantService{
     @Autowired
     private RestaurantRepository repository;
 
-    public void create(Restaurant restaurant) throws ObjectExistsForIdException {
+    public void create(Restaurant restaurant) {
         if(repository.existsById(restaurant.getId()))
             throw new ObjectExistsForIdException(restaurant);
 
         repository.save(restaurant);
     }
 
-    public void update(Restaurant restaurant) throws NotFoundException {
+    public void update(Restaurant restaurant) {
         if(!repository.existsById(restaurant.getId()))
             throw new NotFoundException(restaurant);
 
         repository.save(restaurant);
     }
 
-    public Restaurant get(Integer id) throws NotFoundException {
+    public Restaurant get(Integer id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Restaurant.class, id));
     }
