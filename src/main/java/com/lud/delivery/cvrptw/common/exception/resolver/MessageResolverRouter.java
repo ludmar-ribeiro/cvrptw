@@ -11,25 +11,23 @@ import org.springframework.stereotype.Component;
 
 @Component
 @SuppressWarnings("rawtypes")
-public class RootMessageResolver implements MessageResolver{
+public class MessageResolverRouter implements MessageResolver<Exception>{
 
-    private Map<Class<?>, MessageResolver> resolversMap;
+    private Map<Class<?>, AbstractMessageResolver> resolversMap;
 
     @Autowired
-    public void setMessageResolvers(List<MessageResolver<?>> resolvers) {
+    public void setMessageResolvers(List<AbstractMessageResolver<?>> resolvers) {
         resolversMap = resolvers
                 .stream()
                 .collect(Collectors.toMap(r -> getGenericType(r), 
                         Function.identity()));
     }
 
-    private Class<?> getGenericType(MessageResolver<?> messageResolver) {
-
-        for(ResolvableType iface : ResolvableType.forInstance(messageResolver).getInterfaces()) {
-            return iface.getGeneric(0).resolve();
-        }
-
-        return null;
+    private Class<?> getGenericType(AbstractMessageResolver<?> messageResolver) {
+        return ResolvableType.forInstance(messageResolver)
+                .getSuperType()
+                .getGeneric(0)
+                .resolve();
     }
 
     @Override

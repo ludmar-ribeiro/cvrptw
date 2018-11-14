@@ -1,23 +1,20 @@
 package com.lud.delivery.cvrptw.common.exception.resolver;
 
-import java.util.Locale;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.stereotype.Component;
 
+import com.lud.delivery.cvrptw.common.exception.wrapper.ExceptionMessageSourceResolvableWrapper;
+
 @Component
-public class ExceptionMessageResolver implements MessageResolver<Exception> {
-
-    @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
-    private MessageSourceResolvableForExceptionFactory messageSourceResolvableFactory;
+public class ExceptionMessageResolver extends AbstractMessageResolver<Exception> {
 
     @Override
-    public String resolveMessage(Exception exception) {
-        return  messageSource.getMessage(messageSourceResolvableFactory.create(exception), Locale.getDefault());
+    protected MessageSourceResolvable getMessageSourceResolvable(Exception exception) {
+        return new ExceptionMessageSourceResolvableWrapper(exception, getCodeSufix(exception), exception.getMessage());
     }
 
+    @Override
+    protected String getCodeSufix(Exception exception) {
+        return ".withOriginalMessage";
+    }
 }

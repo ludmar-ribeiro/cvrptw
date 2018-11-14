@@ -1,24 +1,28 @@
 package com.lud.delivery.cvrptw.common.exception.resolver;
 
-import java.util.Locale;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import com.lud.delivery.cvrptw.common.exception.wrapper.ExceptionMessageSourceResolvableWrapper;
+
 @Component
-public class MethodArgumentTypeMismatchExceptionMessageResolver implements MessageResolver<MethodArgumentTypeMismatchException> {
-
-    @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
-    private MessageSourceResolvableForExceptionFactory messageSourceResolvableFactory;
+public class MethodArgumentTypeMismatchExceptionMessageResolver extends AbstractResquestInputExceptionMessageResolver<MethodArgumentTypeMismatchException> {
 
     @Override
-    public String resolveMessage(MethodArgumentTypeMismatchException exception) {
-        return  messageSource.getMessage(messageSourceResolvableFactory.create(exception), Locale.getDefault());
+    protected MessageSourceResolvable getMessageSourceResolvable(MethodArgumentTypeMismatchException exception) {
+        return new ExceptionMessageSourceResolvableWrapper(
+                exception,
+                getCodeSufix(exception),
+                exception.getName(),
+                exception.getValue(),
+                exception.getRequiredType().getSimpleName(),
+                getExpectedFormat(exception));
+    }
+
+    @Override
+    protected Class<?> getRequiredType(MethodArgumentTypeMismatchException exception) {
+        return exception.getRequiredType();
     }
 
 }

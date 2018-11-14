@@ -23,13 +23,13 @@ import com.lud.delivery.cvrptw.common.domain.ErrorRequestBody;
 import com.lud.delivery.cvrptw.common.domain.ErrorRequestBody.ErrorRequestBodyBuilder;
 import com.lud.delivery.cvrptw.common.exception.NotFoundException;
 import com.lud.delivery.cvrptw.common.exception.ObjectExistsForIdException;
-import com.lud.delivery.cvrptw.common.exception.resolver.RootMessageResolver;
+import com.lud.delivery.cvrptw.common.exception.resolver.MessageResolverRouter;
 
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler{
 
     @Autowired
-    private RootMessageResolver messageResolver;
+    private MessageResolverRouter messageResolver;
 
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<Object> handleNotFound(NotFoundException ex, WebRequest request) {
@@ -104,7 +104,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     private List<String> resolveFieldErrors(Exception ex) {
 
         if(ex instanceof MethodArgumentNotValidException)
-            ((MethodArgumentNotValidException) ex)
+            return ((MethodArgumentNotValidException) ex)
                 .getBindingResult()
                     .getFieldErrors()
                         .stream()

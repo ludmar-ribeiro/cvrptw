@@ -1,25 +1,19 @@
 package com.lud.delivery.cvrptw.common.exception.resolver;
 
-import java.util.Locale;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceResolvable;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.lud.delivery.cvrptw.common.exception.wrapper.ExceptionMessageSourceResolvableWrapper;
 
 @Component
-public class JsonParseExceptionMessageResolver implements MessageResolver<JsonParseException>{
-
-    @Autowired
-    private MessageSource messageSource;
-
-    @Autowired
-    private MessageSourceResolvableForExceptionFactory messageSourceResolvableFactory;
+public class JsonParseExceptionMessageResolver extends AbstractMessageResolver<JsonParseException>{
 
     @Override
-    public String resolveMessage(JsonParseException exception) {
-        return  messageSource.getMessage(messageSourceResolvableFactory.create(exception), Locale.getDefault());
+    protected MessageSourceResolvable getMessageSourceResolvable(JsonParseException exception) {
+        String[] lines = exception.getMessage().split("\n");
+
+        return new ExceptionMessageSourceResolvableWrapper(exception, getCodeSufix(exception), lines[0]);
     }
 
 }
