@@ -111,10 +111,12 @@ public class TravelTimeCalculateTestData {
             return lon;
         }
 
+        @SuppressWarnings("unused")
         public void setLat(Double lat) {
             this.lat = lat;
         }
 
+        @SuppressWarnings("unused")
         public void setLon(Double lon) {
             this.lon = lon;
         }

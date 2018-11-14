@@ -2,7 +2,7 @@ package com.lud.delivery.cvrptw.common.exception;
 
 import com.lud.delivery.cvrptw.common.domain.Identifiable;
 
-public class NotFoundException extends ArgumentedException {
+public class NotFoundException extends MessageSourceResolvableException {
 
     private static final long serialVersionUID = -1034067372923274655L;
 

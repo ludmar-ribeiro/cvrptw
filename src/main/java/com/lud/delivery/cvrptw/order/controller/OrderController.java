@@ -1,8 +1,5 @@
 package com.lud.delivery.cvrptw.order.controller;
 
-import static com.lud.delivery.cvrptw.common.api.config.ApiConfig.API;
-import static com.lud.delivery.cvrptw.common.api.config.ApiConfig.API_VERSION;
-
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +22,7 @@ import com.lud.delivery.cvrptw.order.domain.Order;
 import com.lud.delivery.cvrptw.order.service.OrderService;
 
 @RestController
-@RequestMapping(API+API_VERSION+"order")
+@RequestMapping("${common.api.uri}order")
 public class OrderController {
 
     @Autowired

@@ -1,8 +1,5 @@
 package com.lud.delivery.cvrptw.client.controller;
 
-import static com.lud.delivery.cvrptw.common.api.config.ApiConfig.API;
-import static com.lud.delivery.cvrptw.common.api.config.ApiConfig.API_VERSION;
-
 import java.util.List;
 
 import javax.validation.Valid;
@@ -20,7 +17,7 @@ import com.lud.delivery.cvrptw.client.domain.Client;
 import com.lud.delivery.cvrptw.client.service.ClientService;
 
 @RestController
-@RequestMapping(API + API_VERSION + "client")
+@RequestMapping("${common.api.uri}client")
 public class ClientController {
 
     @Autowired
