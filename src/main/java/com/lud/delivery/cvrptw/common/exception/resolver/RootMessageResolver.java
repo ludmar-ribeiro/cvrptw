@@ -33,17 +33,48 @@ public class RootMessageResolver implements MessageResolver{
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public String resolveMessage(Exception exception) {
 
+        Exception ex = exception;
+
+        while(ex != null) {
+
+            String message = resolveExceptionMessage(ex);
+
+            if(message != null)
+                return message;
+
+            if(ex.getCause() != null && ex.getCause() instanceof Exception) {
+                ex = (Exception) ex.getCause();
+                continue;
+            }
+
+            ex = null;
+        }
+
+        return resolveUnknownException(exception);
+    }
+
+    @SuppressWarnings("unchecked")
+    private String resolveExceptionMessage(Exception exception) {
+
         Class<?> clazz = exception.getClass();
-        while(clazz != null && !clazz.equals(Object.class)) {
+
+        while(clazz != null && !clazz.equals(Exception.class)) {
 
             if(resolversMap.containsKey(clazz))
                 return resolversMap.get(clazz).resolveMessage(exception);
 
             clazz = clazz.getSuperclass();
         }
+
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    private String resolveUnknownException(Exception exception) {
+        if(resolversMap.containsKey(Exception.class))
+            return resolversMap.get(Exception.class).resolveMessage(exception);
 
         return null;
     }

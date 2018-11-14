@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.exc.MismatchedInputException;
+
 @Component
-public class ExceptionMessageResolver implements MessageResolver<Exception> {
+public class MismatchedInputExceptionMessageResolver implements MessageResolver<MismatchedInputException> {
 
     @Autowired
     private MessageSource messageSource;
@@ -16,8 +18,7 @@ public class ExceptionMessageResolver implements MessageResolver<Exception> {
     private MessageSourceResolvableForExceptionFactory messageSourceResolvableFactory;
 
     @Override
-    public String resolveMessage(Exception exception) {
+    public String resolveMessage(MismatchedInputException exception) {
         return  messageSource.getMessage(messageSourceResolvableFactory.create(exception), Locale.getDefault());
     }
-
 }
