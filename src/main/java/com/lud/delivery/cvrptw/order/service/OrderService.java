@@ -1,6 +1,6 @@
 package com.lud.delivery.cvrptw.order.service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class OrderService {
                 .orElseThrow(() -> new NotFoundException(Order.class, id));
     }
 
-    public List<Order> search(Integer restaurantId, Date deliveryAfter, Date deliveryUntil) {
+    public List<Order> search(Integer restaurantId, LocalDateTime deliveryAfter, LocalDateTime deliveryUntil) {
         if(deliveryAfter == null && deliveryUntil == null)
             return repository.searchByRestaurant(restaurantId);
 

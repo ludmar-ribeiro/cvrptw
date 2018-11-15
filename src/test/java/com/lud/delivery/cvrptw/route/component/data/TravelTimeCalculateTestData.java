@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-import com.lud.delivery.cvrptw.route.domain.Location;
+import com.lud.delivery.cvrptw.route.domain.SimpleLocation;
 
 @Component
 @ConfigurationProperties("test-data")
@@ -94,31 +94,5 @@ public class TravelTimeCalculateTestData {
 
     public void setTravelTimes(List<Double> travelTimes) {
         this.travelTimes = travelTimes;
-    }
-
-
-    private static class SimpleLocation implements Location {
-        private Double lat;
-        private Double lon;
-
-        @Override
-        public Double getLat() {
-            return lat;
-        }
-
-        @Override
-        public Double getLon() {
-            return lon;
-        }
-
-        @SuppressWarnings("unused")
-        public void setLat(Double lat) {
-            this.lat = lat;
-        }
-
-        @SuppressWarnings("unused")
-        public void setLon(Double lon) {
-            this.lon = lon;
-        }
     }
 }

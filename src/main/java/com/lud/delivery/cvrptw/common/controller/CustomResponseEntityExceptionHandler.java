@@ -1,7 +1,7 @@
 package com.lud.delivery.cvrptw.common.controller;
 
 import java.text.MessageFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -97,7 +97,7 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                 .setMessage(message)
                 .setErrors(messages)
                 .setPath(uri)
-                .setTimestamp(new Date())
+                .setTimestamp(LocalDateTime.now())
                 .build();
     }
 

@@ -5,4 +5,6 @@ public interface Location {
     Double getLat();
 
     Double getLon();
+
+    boolean isDepot();
 }

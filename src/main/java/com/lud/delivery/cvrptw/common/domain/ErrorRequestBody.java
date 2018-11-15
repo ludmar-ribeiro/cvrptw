@@ -1,6 +1,6 @@
 package com.lud.delivery.cvrptw.common.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_EMPTY)
 public class ErrorRequestBody {
 
-    private Date timestamp;
+    private LocalDateTime timestamp;
     private int status = HttpStatus.INTERNAL_SERVER_ERROR.value();
     private String error;
     private String exception;
@@ -22,7 +22,7 @@ public class ErrorRequestBody {
     private String path;
 
     private ErrorRequestBody(
-                Date timestamp,
+                LocalDateTime timestamp,
                 int status,
                 String error,
                 String exception,
@@ -42,7 +42,7 @@ public class ErrorRequestBody {
         this.path = path;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
@@ -75,7 +75,7 @@ public class ErrorRequestBody {
     }
 
     public static class ErrorRequestBodyBuilder {
-        private Date timestamp;
+        private LocalDateTime timestamp;
         private int status = HttpStatus.INTERNAL_SERVER_ERROR.value();
         private String error;
         private String exception;
@@ -84,7 +84,7 @@ public class ErrorRequestBody {
         private String trace;
         private String path;
 
-        public ErrorRequestBodyBuilder setTimestamp(Date timestamp) {
+        public ErrorRequestBodyBuilder setTimestamp(LocalDateTime timestamp) {
             this.timestamp = timestamp;
 
             return this;

@@ -5,9 +5,10 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 import com.lud.delivery.cvrptw.common.domain.Identifiable;
+import com.lud.delivery.cvrptw.route.domain.Location;
 
 @Entity
-public class Restaurant implements Identifiable<Integer> {
+public class Restaurant implements Identifiable<Integer>, Location {
 
     @Id
     @NotNull
@@ -28,6 +29,7 @@ public class Restaurant implements Identifiable<Integer> {
         this.id = id;
     }
 
+    @Override
     public Double getLat() {
         return lat;
     }
@@ -36,11 +38,17 @@ public class Restaurant implements Identifiable<Integer> {
         this.lat = lat;
     }
 
+    @Override
     public Double getLon() {
         return lon;
     }
 
     public void setLon(Double lon) {
         this.lon = lon;
+    }
+
+    @Override
+    public boolean isDepot() {
+        return true;
     }
 }

@@ -1,6 +1,6 @@
 package com.lud.delivery.cvrptw.order.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,10 +17,12 @@ import com.lud.delivery.cvrptw.common.domain.Identifiable;
 import com.lud.delivery.cvrptw.common.json.IdentifiableSerializer;
 import com.lud.delivery.cvrptw.restaurant.domain.Restaurant;
 import com.lud.delivery.cvrptw.restaurant.json.RestaurantGetterDeserializer;
+import com.lud.delivery.cvrptw.route.domain.Location;
+import com.lud.delivery.cvrptw.route.domain.Route;
 
 @Entity
 @Table(name="PURCHASE_ORDER")
-public class Order implements Identifiable<Integer>{
+public class Order implements Identifiable<Integer>, Route{
 
     @Id
     @NotNull
@@ -42,11 +44,11 @@ public class Order implements Identifiable<Integer>{
 
     @NotNull
     @JsonProperty("pickup")
-    private Date pickupTime;
+    private LocalDateTime pickupTime;
 
     @NotNull
     @JsonProperty("delivery")
-    private Date deliveryTime;
+    private LocalDateTime deliveryTime;
 
     @Override
     public Integer getId() {
@@ -73,20 +75,32 @@ public class Order implements Identifiable<Integer>{
         this.client = client;
     }
 
-    public Date getPickupTime() {
+    @Override
+    public LocalDateTime getPickupTime() {
         return pickupTime;
     }
 
-    public void setPickupTime(Date pickupTime) {
+    public void setPickupTime(LocalDateTime pickupTime) {
         this.pickupTime = pickupTime;
     }
 
-    public Date getDeliveryTime() {
+    @Override
+    public LocalDateTime getDeliveryTime() {
         return deliveryTime;
     }
 
-    public void setDeliveryTime(Date deliveryTime) {
+    public void setDeliveryTime(LocalDateTime deliveryTime) {
         this.deliveryTime = deliveryTime;
+    }
+
+    @Override
+    public Location getOrigin() {
+        return restaurant;
+    }
+
+    @Override
+    public Location getDestiny() {
+        return client;
     }
 
 }

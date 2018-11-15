@@ -1,6 +1,6 @@
 package com.lud.delivery.cvrptw.order.controller;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -50,8 +50,8 @@ public class OrderController {
 
     @GetMapping(params="restaurantId")
     public List<Order> search(@RequestParam(required=true) Integer restaurantId,
-            @RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss'Z'") Date deliveryAfter,
-            @RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss'Z'") Date deliveryUntil){
+            @RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss'Z'") LocalDateTime deliveryAfter,
+            @RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss'Z'") LocalDateTime deliveryUntil){
         return service.search(restaurantId, deliveryAfter, deliveryUntil); 
     }
 }

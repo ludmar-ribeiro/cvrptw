@@ -1,6 +1,6 @@
 package com.lud.delivery.cvrptw.order.repository;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,16 +19,16 @@ public interface OrderRepository extends JpaRepository<Order, Integer>{
     @Query("SELECT o FROM Order o "
             +"WHERE o.restaurant.id = ?1 "
             +"AND o.deliveryTime > ?2 ")
-    List<Order> searchByRestaurantAndDeliveryAfter(Integer restaurantId, Date deliveryAfter);
+    List<Order> searchByRestaurantAndDeliveryAfter(Integer restaurantId, LocalDateTime deliveryAfter);
 
     @Query("SELECT o FROM Order o "
             +"WHERE o.restaurant.id = ?1 "
             +"AND o.deliveryTime <= ?2 ")
-    List<Order> searchByRestaurantAndDeliveryUntil(Integer restaurantId, Date deliveryUntil);
+    List<Order> searchByRestaurantAndDeliveryUntil(Integer restaurantId, LocalDateTime deliveryUntil);
 
     @Query("SELECT o FROM Order o "
             +"WHERE o.restaurant.id = ?1 "
             +"AND o.deliveryTime > ?2 "
             +"AND o.deliveryTime <= ?3 ")
-    List<Order> searchByRestaurantAndDelivery(Integer restaurantId, Date deliveryAfter, Date deliveryUntil);
+    List<Order> searchByRestaurantAndDelivery(Integer restaurantId, LocalDateTime deliveryAfter, LocalDateTime deliveryUntil);
 }
