@@ -103,4 +103,25 @@ public class Order implements Identifiable<Integer>, Route{
         return client;
     }
 
+    @Override
+    public int hashCode() {
+        return routeHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof Route))
+            return false;
+
+        Route otherRoute = (Route) obj;
+
+        return this.equalsRoute(otherRoute);
+    }
+
 }

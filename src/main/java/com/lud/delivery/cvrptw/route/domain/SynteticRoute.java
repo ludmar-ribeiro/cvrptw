@@ -35,4 +35,26 @@ public class SynteticRoute implements Route {
     public Location getDestiny() {
         return destiny;
     }
+
+    @Override
+    public int hashCode() {
+        return routeHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof Route))
+            return false;
+
+        Route other = (Route) obj;
+
+        return this.equalsRoute(other);
+    }
+
 }

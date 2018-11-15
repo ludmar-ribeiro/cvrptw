@@ -11,7 +11,16 @@ public class RouteComparator implements Comparator<CalculatedRoute> {
 
     @Override
     public int compare(CalculatedRoute route1, CalculatedRoute route2) {
-        return route1.getTravelTime().compareTo(route2.getTravelTime());
+        int comparison = compareNumberOfTargets(route2).compareTo(compareNumberOfTargets(route1));
+
+        if(comparison == 0)
+            comparison = route1.getTravelTime().compareTo(route2.getTravelTime());
+
+        return comparison;
+    }
+
+    private Long compareNumberOfTargets(CalculatedRoute route) {
+        return route.getArc().stream().filter(l -> !l.isDepot()).count();
     }
 
 }

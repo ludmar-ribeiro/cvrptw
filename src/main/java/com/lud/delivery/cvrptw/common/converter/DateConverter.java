@@ -7,9 +7,9 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesBindin
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import com.lud.delivery.cvrptw.common.exception.ResolvableParseException;
 import com.lud.delivery.cvrptw.common.utils.DateTimeUtils;
 import com.lud.delivery.cvrptw.common.utils.DefaultDateTimeFormat;
-import com.lud.delivery.cvrptw.exception.ResolvableParseException;
 
 @Component
 @ConfigurationPropertiesBinding

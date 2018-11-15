@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 
 import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.Location;
+import com.lud.delivery.cvrptw.route.domain.Route;
 
 public class CompositeCalculatedRoute implements CalculatedRoute {
 
@@ -57,4 +58,24 @@ public class CompositeCalculatedRoute implements CalculatedRoute {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public int hashCode() {
+        return routeHashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof Route))
+            return false;
+
+        Route otherRoute = (Route) obj;
+
+        return this.equalsRoute(otherRoute);
+    }
 }

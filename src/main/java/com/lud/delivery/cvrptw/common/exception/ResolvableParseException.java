@@ -1,6 +1,4 @@
-package com.lud.delivery.cvrptw.exception;
-
-import com.lud.delivery.cvrptw.common.exception.MessageSourceResolvableException;
+package com.lud.delivery.cvrptw.common.exception;
 
 public class ResolvableParseException extends MessageSourceResolvableException {
 

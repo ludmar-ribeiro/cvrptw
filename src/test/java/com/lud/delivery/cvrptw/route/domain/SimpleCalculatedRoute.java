@@ -8,8 +8,8 @@ public class SimpleCalculatedRoute implements CalculatedRoute{
     private LocalDateTime pickupTime;
     private LocalDateTime deliveryTime;
     private Double travelTime;
-    private SimpleLocation origin;
-    private SimpleLocation destiny;
+    private Location origin;
+    private Location destiny;
 
     @Override
     public LocalDateTime getPickupTime() {
@@ -48,11 +48,11 @@ public class SimpleCalculatedRoute implements CalculatedRoute{
         return destiny;
     }
 
-    public void setOrigin(SimpleLocation origin) {
+    public void setOrigin(Location origin) {
         this.origin = origin;
     }
 
-    public void setDestiny(SimpleLocation destiny) {
+    public void setDestiny(Location destiny) {
         this.destiny = destiny;
     }
 
