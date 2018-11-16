@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.lud.delivery.cvrptw.common.utils.DateTimeUtils;
 import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.Location;
 import com.lud.delivery.cvrptw.route.domain.Route;
@@ -28,7 +29,7 @@ public class CompositeCalculatedRoute implements CalculatedRoute {
 
     @Override
     public LocalDateTime getDeliveryTime() {
-        return null;
+        return DateTimeUtils.addMilliseconds(routeA.getDeliveryTime(), routeB.getTravelTime());
     }
 
     @Override

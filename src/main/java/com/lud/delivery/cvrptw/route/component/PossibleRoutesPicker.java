@@ -25,7 +25,7 @@ public class PossibleRoutesPicker {
 
         return possibleTargets
                 .stream()
-                .map(l -> subRouteCalculator.calculate(workset, route.getDestiny(), l))
+                .flatMap(l -> subRouteCalculator.calculate(workset, route.getDestiny(), l).stream())
             .collect(Collectors.toList());
     }
 

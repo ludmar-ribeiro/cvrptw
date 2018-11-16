@@ -1,6 +1,8 @@
 package com.lud.delivery.cvrptw.route.component;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,24 +42,34 @@ public class SubRouteCalculator {
         return route;
     }
 
-    private Route getRouteFor(RouteWorkset workset, Location origin, Location destiny) {
-        LocalDateTime pickup = null;
-        LocalDateTime delivery = null;
+    public List<CalculatedRoute> calculate(RouteWorkset workset, Location origin, Location destiny) {
+        return calculate(getRoutesFor(workset, origin, destiny));
+    }
 
+    private List<Route> getRoutesFor(RouteWorkset workset, Location origin, Location destiny) {
         if(!destiny.isDepot()) {
-            CalculatedRoute orderedRoute = workset.getTargetToRouteMap().get(destiny);
 
-            if(origin.isDepot() && origin.equals(orderedRoute.getOrigin()))
-                return orderedRoute;
-
-            pickup = orderedRoute.getPickupTime();
-            delivery = orderedRoute.getDeliveryTime();
+            return getRoutesForTarget(workset, origin, destiny);
         }
 
-        return new SynteticRoute(origin, destiny, pickup, delivery);
+        return Collections.singletonList((Route) new SynteticRoute(origin, destiny, LocalDateTime.MIN, LocalDateTime.MAX));
     }
 
-    public CalculatedRoute calculate(RouteWorkset workset, Location origin, Location destiny) {
-        return calculate(getRouteFor(workset, origin, destiny));
+    private List<Route> getRoutesForTarget(RouteWorkset workset, Location origin, Location destiny) {
+        List<CalculatedRoute> orderedRoutes = workset.getTargetToRouteMap().get(destiny);
+        List<Route> routes = new LinkedList<>();
+
+        for(CalculatedRoute orderedRoute: orderedRoutes) {
+
+            if(origin.isDepot() && orderedRoute.getOrigin().equals(origin)) {
+                routes.add(orderedRoute);
+                continue;
+            }
+
+            routes.add(new SynteticRoute(origin, destiny, orderedRoute.getPickupTime(), orderedRoute.getDeliveryTime()));
+        }
+
+        return routes;
     }
+
 }

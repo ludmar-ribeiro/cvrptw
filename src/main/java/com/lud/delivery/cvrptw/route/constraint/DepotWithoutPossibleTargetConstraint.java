@@ -1,5 +1,8 @@
 package com.lud.delivery.cvrptw.route.constraint;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,9 +39,11 @@ public class DepotWithoutPossibleTargetConstraint implements RouteConstraint{
 
     private CalculatedRoute simulateRoute(RouteWorkset workset, CalculatedRoute route, Location destiny) {
 
-        return new CompositeCalculatedRoute(
-                route,
-                subRouteCalculator.calculate(workset, route.getDestiny(), destiny)
-            );
+        return subRouteCalculator
+                .calculate(workset, route.getDestiny(), destiny)
+                    .stream()
+                    .map(r -> new CompositeCalculatedRoute(route, r))
+                .collect(Collectors.toList())
+                .get(0);
     }
 }

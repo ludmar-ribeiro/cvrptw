@@ -3,6 +3,7 @@ package com.lud.delivery.cvrptw.route.domain;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -16,7 +17,7 @@ public class RouteWorkset {
     private SortedList<CalculatedRoute> sortedClosedRoutes;
 
     private Map<Location, List<Location>> depotToTargetMap;
-    private Map<Location, CalculatedRoute> targetToRouteMap;
+    private Map<Location, List<CalculatedRoute>> targetToRouteMap;
 
     public RouteWorkset(
             ObservableList<CalculatedRoute> routes,
@@ -24,7 +25,7 @@ public class RouteWorkset {
             SortedList<CalculatedRoute> sortedRoutes,
             SortedList<CalculatedRoute> sortedClosedRoutes,
             Map<Location, List<Location>> depotToTargetMap,
-            Map<Location, CalculatedRoute> targetToRouteMap) {
+            Map<Location, List<CalculatedRoute>> targetToRouteMap) {
 
         this.routes = routes;
         this.closedRoutes = closedRoutes;
@@ -48,15 +49,19 @@ public class RouteWorkset {
     }
     
     
-    public Map<Location, CalculatedRoute> getTargetToRouteMap() {
+    public Map<Location, List<CalculatedRoute>> getTargetToRouteMap() {
         return targetToRouteMap;
     }
 
-    public Location getDepot(Location location) {
+    public List<Location> getDepotList(Location location) {
         if(location.isDepot())
-            return location;
+            return Collections.singletonList(location);
 
-        return targetToRouteMap.get(location).getOrigin();
+        return targetToRouteMap
+                .get(location)
+                    .stream()
+                    .map(r -> r.getOrigin())
+              .collect(Collectors.toList());
     }
 
     public List<Location> getTargetsForDepot(Location location) {

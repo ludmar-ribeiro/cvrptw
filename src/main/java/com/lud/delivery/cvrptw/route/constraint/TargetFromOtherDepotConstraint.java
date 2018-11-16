@@ -14,8 +14,19 @@ public class TargetFromOtherDepotConstraint implements RouteConstraint{
         if(location.isDepot())
             return true;
 
-        Location depot = route.getDestiny().isDepot() ? route.getDestiny() : workset.getDepot(route.getDestiny());
+        Location currentDepot = getCurrentDepot(route);
 
-        return depot.equals(workset.getDepot(location));
+        return workset
+                .getDepotList(location)
+                .contains(currentDepot);
+    }
+
+    private Location getCurrentDepot(CalculatedRoute route) {
+        return route
+                .getArc()
+                .stream()
+                .filter(l -> l.isDepot())
+                .reduce((d1,d2) -> d2)
+             .orElse(null);
     }
 }

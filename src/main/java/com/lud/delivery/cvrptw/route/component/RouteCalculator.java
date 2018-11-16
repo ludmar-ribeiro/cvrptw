@@ -6,11 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.lud.delivery.cvrptw.route.RouteWorksetFactory;
 import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.Route;
 import com.lud.delivery.cvrptw.route.domain.RouteWorkset;
 import com.lud.delivery.cvrptw.route.domain.composite.CompositeCalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.factory.RouteWorksetFactory;
 
 @Component
 public class RouteCalculator {

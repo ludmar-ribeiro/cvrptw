@@ -1,4 +1,4 @@
-package com.lud.delivery.cvrptw.route;
+package com.lud.delivery.cvrptw.route.domain.factory;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class RouteWorksetFactory {
         private SortedList<CalculatedRoute> sortedClosedRoutes;
 
         private Map<Location, List<Location>> depotToTargetMap = new HashMap<>();
-        private Map<Location, CalculatedRoute> targetToRouteMap = new HashMap<>();
+        private Map<Location, List<CalculatedRoute>> targetToRouteMap = new HashMap<>();
 
         public RouteWorksetBuilder forRoutes(List<CalculatedRoute> routes) {
             this.routes = FXCollections.observableList(routes);
@@ -84,7 +84,18 @@ public class RouteWorksetFactory {
         }
 
         private void putToTargetToDepotMap(CalculatedRoute route) {
-            targetToRouteMap.put(route.getDestiny(), route);
+            getRouteListForTarget(route.getDestiny()).add(route);
+        }
+
+        private List<CalculatedRoute> getRouteListForTarget(Location location) {
+            List<CalculatedRoute> list = targetToRouteMap.get(location);
+
+            if(list == null ) {
+                list = new LinkedList<>();
+                targetToRouteMap.put(location, list);
+            }
+
+            return list;
         }
 
         private void putToDepotToTargetMap(CalculatedRoute route) {

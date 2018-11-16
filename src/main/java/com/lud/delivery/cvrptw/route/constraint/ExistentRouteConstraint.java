@@ -1,5 +1,9 @@
 package com.lud.delivery.cvrptw.route.constraint;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,17 +22,21 @@ public class ExistentRouteConstraint implements RouteConstraint{
     @Override
     public boolean isAllowed(Location location, CalculatedRoute route, RouteWorkset workset) {
 
-        CalculatedRoute simulation = simulateRoute(workset, route, location);
+        List<CalculatedRoute> simulations = simulateRoute(workset, route, location);
 
-        return !workset.getSortedRoutes().contains(simulation)
-             && !workset.getSortedClosedRoutes().contains(simulation);
+        return !Stream.concat(
+                    workset.getSortedRoutes().stream(),
+                    workset.getSortedClosedRoutes().stream())
+                .collect(Collectors.toList())
+                .containsAll(simulations);
     }
 
-    private CalculatedRoute simulateRoute(RouteWorkset workset, CalculatedRoute route, Location destiny) {
+    private List<CalculatedRoute> simulateRoute(RouteWorkset workset, CalculatedRoute route, Location destiny) {
 
-        return new CompositeCalculatedRoute(
-                route,
-                subRouteCalculator.calculate(workset, route.getDestiny(), destiny)
-            );
+        return subRouteCalculator
+                .calculate(workset, route.getDestiny(), destiny)
+                    .stream()
+                    .map(r -> new CompositeCalculatedRoute(route, r))
+                .collect(Collectors.toList());
     }
 }
