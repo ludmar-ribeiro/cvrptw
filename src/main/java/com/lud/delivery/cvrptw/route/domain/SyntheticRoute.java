@@ -2,14 +2,14 @@ package com.lud.delivery.cvrptw.route.domain;
 
 import java.time.LocalDateTime;
 
-public class SynteticRoute implements Route {
+public class SyntheticRoute implements Route {
 
     private Location origin;
     private Location destiny;
     private LocalDateTime delivery;
     private LocalDateTime pickup;
 
-    public SynteticRoute(Location origin, Location destiny, LocalDateTime pickup, LocalDateTime delivery) {
+    public SyntheticRoute(Location origin, Location destiny, LocalDateTime pickup, LocalDateTime delivery) {
         this.origin = origin;
         this.destiny = destiny;
         this.pickup = pickup;

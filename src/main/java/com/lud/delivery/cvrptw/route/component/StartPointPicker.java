@@ -9,10 +9,10 @@ import com.lud.delivery.cvrptw.route.domain.RouteWorkset;
 public class StartPointPicker {
 
     public CalculatedRoute pick(RouteWorkset fullRoute) {
-        if(fullRoute.getSortedRoutes().isEmpty())
+        if(fullRoute.getSortedOpenRoutes().isEmpty())
             return null;
 
-        return fullRoute.getSortedRoutes().get(0);
+        return fullRoute.getSortedOpenRoutes().get(0);
     }
 
 }

@@ -1,10 +1,8 @@
 package com.lud.delivery.cvrptw.route.domain.composite;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.lud.delivery.cvrptw.common.utils.DateTimeUtils;
 import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
@@ -16,10 +14,14 @@ public class CompositeCalculatedRoute implements CalculatedRoute {
 
     private CalculatedRoute routeA;
     private CalculatedRoute routeB;
+    private List<Location> arc = new LinkedList<>();
 
     public CompositeCalculatedRoute(CalculatedRoute routeA, CalculatedRoute routeB) {
         this.routeA = routeA;
         this.routeB = routeB;
+
+        this.arc.addAll(routeA.getArc());
+        this.arc.add(routeB.getDestiny());
     }
 
     @Override
@@ -49,14 +51,25 @@ public class CompositeCalculatedRoute implements CalculatedRoute {
 
     @Override
     public void setTravelTime(Double calculate) {
+        //Do nothing
+    }
+
+    @Override
+    public boolean isSynthetic() {
+        return true;
+    }
+
+    @Override
+    public Location getCurrentDepot() {
+        if(routeB.getCurrentDepot() != null)
+            return routeB.getCurrentDepot();
+
+        return routeA.getCurrentDepot();
     }
 
     @Override
     public List<Location> getArc() {
-        return Stream.concat(
-                    routeA.getArc().stream(), 
-                    Collections.singleton(getDestiny()).stream())
-                .collect(Collectors.toList());
+        return arc;
     }
 
     @Override
@@ -79,4 +92,5 @@ public class CompositeCalculatedRoute implements CalculatedRoute {
 
         return this.equalsRoute(otherRoute);
     }
+
 }

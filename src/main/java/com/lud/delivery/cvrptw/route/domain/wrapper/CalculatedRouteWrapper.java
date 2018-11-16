@@ -1,13 +1,14 @@
 package com.lud.delivery.cvrptw.route.domain.wrapper;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.lud.delivery.cvrptw.common.utils.DateTimeUtils;
 import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.Location;
 import com.lud.delivery.cvrptw.route.domain.Route;
+import com.lud.delivery.cvrptw.route.domain.SyntheticRoute;
 
 public class CalculatedRouteWrapper implements CalculatedRoute {
 
@@ -15,8 +16,12 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
 
     private Double travelTime;
 
+    private List<Location> arc = new LinkedList<>();
+
     public CalculatedRouteWrapper(Route route) {
         this.route = route;
+        this.arc.add(route.getOrigin());
+        this.arc.add(route.getDestiny());
     }
 
     @Override
@@ -49,15 +54,25 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
         this.travelTime = travelTime;
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
+    public boolean isSynthetic() {
+        return route instanceof SyntheticRoute;
+    }
+
+    @Override
+    public Location getCurrentDepot() {
+        if(getDestiny().isDepot())
+            return getDestiny();
+
+        if(getOrigin().isDepot())
+            return getOrigin();
+
+        return null;
+    }
+
     @Override
     public List<Location> getArc() {
-        return (List<Location>) (List<?>) Arrays.asList(
-                    new Location[] {
-                            getOrigin(),
-                            getDestiny()
-                    }
-               ); 
+        return arc; 
     }
 
     @Override
@@ -80,4 +95,6 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
 
         return this.equalsRoute(otherRoute);
     }
+
+
 }

@@ -1,17 +1,14 @@
 package com.lud.delivery.cvrptw.route.domain.factory;
 
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lud.delivery.cvrptw.route.comparator.RouteComparator;
 import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
-import com.lud.delivery.cvrptw.route.domain.Location;
+import com.lud.delivery.cvrptw.route.domain.CalculatedRouteMap;
 import com.lud.delivery.cvrptw.route.domain.RouteWorkset;
 
 import javafx.collections.FXCollections;
@@ -24,7 +21,7 @@ public class RouteWorksetFactory {
     @Autowired
     private RouteComparator routeComparator;
 
-    public RouteWorkset create(List<CalculatedRoute> routes) {
+    public RouteWorkset create(CalculatedRouteMap routes) {
         return new RouteWorksetBuilder()
                 .forRoutes(routes)
                 .withComparator(routeComparator)
@@ -35,17 +32,17 @@ public class RouteWorksetFactory {
 
         private Comparator<CalculatedRoute> comparator;
 
+        private CalculatedRouteMap map;
         private ObservableList<CalculatedRoute> routes;
+        private ObservableList<CalculatedRoute> openRoutes;
         private ObservableList<CalculatedRoute> closedRoutes = FXCollections.observableArrayList();
 
         private SortedList<CalculatedRoute> sortedRoutes;
+        private SortedList<CalculatedRoute> sortedOpenRoutes;
         private SortedList<CalculatedRoute> sortedClosedRoutes;
 
-        private Map<Location, List<Location>> depotToTargetMap = new HashMap<>();
-        private Map<Location, List<CalculatedRoute>> targetToRouteMap = new HashMap<>();
-
-        public RouteWorksetBuilder forRoutes(List<CalculatedRoute> routes) {
-            this.routes = FXCollections.observableList(routes);
+        public RouteWorksetBuilder forRoutes(CalculatedRouteMap routes) {
+            this.map = routes;
 
             return this;
         }
@@ -57,62 +54,25 @@ public class RouteWorksetFactory {
         }
 
         public RouteWorkset build() {
-            buildSortedLists();
-            buildMaps();
+            buildLists();
 
             return new RouteWorkset(
+                    map,
                     routes,
+                    openRoutes,
                     closedRoutes,
                     sortedRoutes,
-                    sortedClosedRoutes,
-                    depotToTargetMap,
-                    targetToRouteMap);
+                    sortedOpenRoutes,
+                    sortedClosedRoutes);
         }
 
-        private void buildSortedLists() {
+        private void buildLists() {
+            routes = FXCollections.observableList(map.getOrderedRoutes().stream().collect(Collectors.toList()));
+            openRoutes = FXCollections.observableList(map.getOrderedRoutes().stream().collect(Collectors.toList()));
             sortedRoutes = new SortedList<>(routes, comparator);
+            sortedOpenRoutes = new SortedList<>(openRoutes, comparator);
             sortedClosedRoutes = new SortedList<>(closedRoutes, comparator);
         }
-
-        private void buildMaps() {
-            routes.forEach((r) -> putToMaps(r));
-        }
-
-        private void putToMaps(CalculatedRoute route) {
-            putToDepotToTargetMap(route);
-            putToTargetToDepotMap(route);
-        }
-
-        private void putToTargetToDepotMap(CalculatedRoute route) {
-            getRouteListForTarget(route.getDestiny()).add(route);
-        }
-
-        private List<CalculatedRoute> getRouteListForTarget(Location location) {
-            List<CalculatedRoute> list = targetToRouteMap.get(location);
-
-            if(list == null ) {
-                list = new LinkedList<>();
-                targetToRouteMap.put(location, list);
-            }
-
-            return list;
-        }
-
-        private void putToDepotToTargetMap(CalculatedRoute route) {
-            getTargetListForDepot(route.getOrigin()).add(route.getDestiny());
-        }
-
-        private List<Location> getTargetListForDepot(Location location) {
-            List<Location> list = depotToTargetMap.get(location);
-
-            if(list == null ) {
-                list = new LinkedList<>();
-                depotToTargetMap.put(location, list);
-            }
-
-            return list;
-        }
-
     }
 }
 

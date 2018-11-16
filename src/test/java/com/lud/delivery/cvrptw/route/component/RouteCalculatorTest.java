@@ -87,8 +87,8 @@ public class RouteCalculatorTest {
         List<CalculatedRoute> results = calculator.calculate(routes);
 
         assertEquals(results.size(), 1);
-        assertEquals(results.get(0).getArc().size(), 12);
-        assertEquals(results.get(0).getArc().stream().filter(l -> !l.isDepot()).count(), 8);
+        assertEquals(results.get(0).getArc().size(), 9);
+        assertEquals(results.get(0).getArc().stream().filter(l -> !l.isDepot()).count(), 6);
 
         Double expectedTravelTime = calculateTravelTime(results.get(0).getArc());
         assertEquals(expectedTravelTime, results.get(0).getTravelTime());

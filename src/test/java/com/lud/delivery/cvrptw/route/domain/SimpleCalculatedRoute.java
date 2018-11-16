@@ -61,4 +61,13 @@ public class SimpleCalculatedRoute implements CalculatedRoute{
         return null;
     }
 
+    @Override
+    public boolean isSynthetic() {
+        return true;
+    }
+
+    @Override
+    public Location getCurrentDepot() {
+        return null;
+    }
 }

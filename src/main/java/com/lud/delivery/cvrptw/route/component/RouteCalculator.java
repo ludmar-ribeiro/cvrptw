@@ -19,7 +19,7 @@ public class RouteCalculator {
     private RouteWorksetFactory worksetFactory;
 
     @Autowired
-    private SubRouteCalculator subRouteCalculator;
+    private PreRouteCalculator preRouteCalculator;
 
     @Autowired
     private StartPointPicker startPointPicker;
@@ -28,7 +28,7 @@ public class RouteCalculator {
     private PossibleRoutesPicker possibleRoutesPicker; 
 
     public List<CalculatedRoute> calculate(List<Route> routes) {
-        RouteWorkset workset = worksetFactory.create(subRouteCalculator.calculate(routes));
+        RouteWorkset workset = worksetFactory.create(preRouteCalculator.calculate(routes));
 
         calculateOpenRoutes(workset);
 
@@ -44,22 +44,19 @@ public class RouteCalculator {
         while(route != null) {
             calculatePossibleRoutes(workset, route);
 
-            if(workset.getSortedRoutes().isEmpty())
+            if(workset.getSortedOpenRoutes().isEmpty())
                 return;
 
-            route = workset.getSortedRoutes().get(0);
+            route = workset.getSortedOpenRoutes().get(0);
         }
     }
 
     private void calculatePossibleRoutes(RouteWorkset workset, CalculatedRoute route) {
         List<CalculatedRoute> possibleRoutes = possibleRoutesPicker.pick(route, workset);
 
-        if(possibleRoutes.isEmpty()) {
-            workset.close(route);
-            return;
-        }
-
         possibleRoutes.forEach((pr) -> workset.add(compositeRoute(route, pr)));
+
+        workset.close(route);
     }
 
     private CalculatedRoute compositeRoute(CalculatedRoute route, CalculatedRoute routeNewSubRoute) {

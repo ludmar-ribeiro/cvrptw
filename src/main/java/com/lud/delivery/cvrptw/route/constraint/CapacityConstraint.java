@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
-import com.lud.delivery.cvrptw.route.domain.Location;
 import com.lud.delivery.cvrptw.route.domain.RouteWorkset;
 
 @Component
@@ -14,17 +13,17 @@ public class CapacityConstraint implements RouteConstraint{
     private Integer capacity;
 
     @Override
-    public boolean isAllowed(Location location, CalculatedRoute route, RouteWorkset workset) {
-        if(location.isDepot())
+    public boolean isAllowed(CalculatedRoute candidate, CalculatedRoute rootRoute, RouteWorkset workset) {
+        if(candidate.getDestiny().isDepot())
             return true;
 
-        if(route.getArc().size() < capacity)
+        if(rootRoute.getArc().size() < capacity)
             return true;
 
-        return route
+        return rootRoute
                 .getArc()
                     .stream()
-                        .skip(route.getArc().size() - capacity)
+                        .skip(rootRoute.getArc().size() - capacity)
                         .filter(l -> !l.isDepot())
                .count() < capacity;
     }

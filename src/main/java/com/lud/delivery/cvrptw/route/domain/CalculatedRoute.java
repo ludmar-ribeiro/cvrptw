@@ -10,6 +10,10 @@ public interface CalculatedRoute extends Route {
 
     List<Location> getArc();
 
+    boolean isSynthetic();
+
+    Location getCurrentDepot();
+
     @Override
     default int routeHashCode() {
         int prime = 31;
@@ -40,5 +44,4 @@ public interface CalculatedRoute extends Route {
 
         return true;
     }
-
 }
