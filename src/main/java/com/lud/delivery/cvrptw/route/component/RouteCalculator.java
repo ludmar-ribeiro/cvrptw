@@ -25,7 +25,10 @@ public class RouteCalculator {
     private StartPointPicker startPointPicker;
 
     @Autowired
-    private PossibleRoutesPicker possibleRoutesPicker; 
+    private PossibleRoutesPicker possibleRoutesPicker;
+
+    @Autowired
+    private StopEvaluator stopEvaluator; 
 
     public List<CalculatedRoute> calculate(List<Route> routes) {
         RouteWorkset workset = worksetFactory.create(preRouteCalculator.calculate(routes));
@@ -45,6 +48,9 @@ public class RouteCalculator {
             calculatePossibleRoutes(workset, route);
 
             if(workset.getSortedOpenRoutes().isEmpty())
+                return;
+
+            if(stopEvaluator.shouldStop(workset, route))
                 return;
 
             route = workset.getSortedOpenRoutes().get(0);

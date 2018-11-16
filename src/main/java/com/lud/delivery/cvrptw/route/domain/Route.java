@@ -2,7 +2,7 @@ package com.lud.delivery.cvrptw.route.domain;
 
 import java.time.LocalDateTime;
 
-public interface Route {
+public interface Route{
 
     LocalDateTime getPickupTime();
 
@@ -11,6 +11,8 @@ public interface Route {
     Location getOrigin();
 
     Location getDestiny();
+
+    boolean isSynthetic();
 
     default int routeHashCode() {
         final int prime = 31;

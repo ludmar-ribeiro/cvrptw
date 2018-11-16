@@ -1,7 +1,8 @@
 package com.lud.delivery.cvrptw.route.domain.factory;
 
 import java.util.Comparator;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,11 +34,10 @@ public class RouteWorksetFactory {
         private Comparator<CalculatedRoute> comparator;
 
         private CalculatedRouteMap map;
-        private ObservableList<CalculatedRoute> routes;
-        private ObservableList<CalculatedRoute> openRoutes;
+        private Set<CalculatedRoute> routes = new HashSet<>();
+        private ObservableList<CalculatedRoute> openRoutes = FXCollections.observableArrayList();
         private ObservableList<CalculatedRoute> closedRoutes = FXCollections.observableArrayList();
 
-        private SortedList<CalculatedRoute> sortedRoutes;
         private SortedList<CalculatedRoute> sortedOpenRoutes;
         private SortedList<CalculatedRoute> sortedClosedRoutes;
 
@@ -61,15 +61,11 @@ public class RouteWorksetFactory {
                     routes,
                     openRoutes,
                     closedRoutes,
-                    sortedRoutes,
                     sortedOpenRoutes,
                     sortedClosedRoutes);
         }
 
         private void buildLists() {
-            routes = FXCollections.observableList(map.getOrderedRoutes().stream().collect(Collectors.toList()));
-            openRoutes = FXCollections.observableList(map.getOrderedRoutes().stream().collect(Collectors.toList()));
-            sortedRoutes = new SortedList<>(routes, comparator);
             sortedOpenRoutes = new SortedList<>(openRoutes, comparator);
             sortedClosedRoutes = new SortedList<>(closedRoutes, comparator);
         }

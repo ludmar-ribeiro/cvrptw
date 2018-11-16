@@ -1,6 +1,7 @@
 package com.lud.delivery.cvrptw.route.domain;
 
 import java.util.List;
+import java.util.Set;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -9,8 +10,7 @@ public class RouteWorkset {
 
     private CalculatedRouteMap map;
 
-    private ObservableList<CalculatedRoute> routes;
-    private SortedList<CalculatedRoute> sortedRoutes;
+    private Set<CalculatedRoute> routes;
 
     private ObservableList<CalculatedRoute> openRoutes;
     private SortedList<CalculatedRoute> sortedOpenRoutes;
@@ -21,10 +21,9 @@ public class RouteWorkset {
 
     public RouteWorkset(
             CalculatedRouteMap map,
-            ObservableList<CalculatedRoute> routes,
+            Set<CalculatedRoute> routes,
             ObservableList<CalculatedRoute> openRoutes,
             ObservableList<CalculatedRoute> closedRoutes,
-            SortedList<CalculatedRoute> sortedRoutes,
             SortedList<CalculatedRoute> sortedOpenRoutes,
             SortedList<CalculatedRoute> sortedClosedRoutes) {
 
@@ -32,7 +31,6 @@ public class RouteWorkset {
         this.routes = routes;
         this.openRoutes = openRoutes;
         this.closedRoutes = closedRoutes;
-        this.sortedRoutes = sortedRoutes;
         this.sortedOpenRoutes = sortedOpenRoutes;
         this.sortedClosedRoutes = sortedClosedRoutes;
 
@@ -42,8 +40,8 @@ public class RouteWorkset {
         return map;
     }
 
-    public SortedList<CalculatedRoute> getSortedRoutes() {
-        return sortedRoutes;
+    public Set<CalculatedRoute> getRoutes() {
+        return routes;
     }
 
     public List<CalculatedRoute> getSortedOpenRoutes() {

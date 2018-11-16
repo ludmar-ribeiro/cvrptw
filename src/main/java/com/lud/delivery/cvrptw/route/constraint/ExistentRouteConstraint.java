@@ -15,7 +15,7 @@ public class ExistentRouteConstraint implements RouteConstraint{
         CalculatedRoute simulation = simulateRoute(workset, rootRoute, candidate);
 
         return !workset
-                .getSortedRoutes()
+                .getRoutes()
                     .contains(simulation);
     }
 

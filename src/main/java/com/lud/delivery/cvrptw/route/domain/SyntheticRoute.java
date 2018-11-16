@@ -1,60 +1,13 @@
 package com.lud.delivery.cvrptw.route.domain;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
-public class SyntheticRoute implements Route {
+public interface SyntheticRoute extends Route{
 
-    private Location origin;
-    private Location destiny;
-    private LocalDateTime delivery;
-    private LocalDateTime pickup;
-
-    public SyntheticRoute(Location origin, Location destiny, LocalDateTime pickup, LocalDateTime delivery) {
-        this.origin = origin;
-        this.destiny = destiny;
-        this.pickup = pickup;
-        this.delivery = delivery;
-    }
+    List<OrderedRoute> getOrderedRoutes();
 
     @Override
-    public LocalDateTime getPickupTime() {
-        return pickup;
+    default boolean isSynthetic() {
+        return true;
     }
-
-    @Override
-    public LocalDateTime getDeliveryTime() {
-        return delivery;
-    }
-
-    @Override
-    public Location getOrigin() {
-        return origin;
-    }
-
-    @Override
-    public Location getDestiny() {
-        return destiny;
-    }
-
-    @Override
-    public int hashCode() {
-        return routeHashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof Route))
-            return false;
-
-        Route other = (Route) obj;
-
-        return this.equalsRoute(other);
-    }
-
 }

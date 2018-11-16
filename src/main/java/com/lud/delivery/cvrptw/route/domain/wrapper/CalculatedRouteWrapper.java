@@ -1,12 +1,14 @@
 package com.lud.delivery.cvrptw.route.domain.wrapper;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.lud.delivery.cvrptw.common.utils.DateTimeUtils;
 import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.Location;
+import com.lud.delivery.cvrptw.route.domain.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.Route;
 import com.lud.delivery.cvrptw.route.domain.SyntheticRoute;
 
@@ -16,12 +18,40 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
 
     private Double travelTime;
 
+    private Location currentDepot;
+
     private List<Location> arc = new LinkedList<>();
+
+    private List<OrderedRoute> orderedRoutes;
 
     public CalculatedRouteWrapper(Route route) {
         this.route = route;
-        this.arc.add(route.getOrigin());
-        this.arc.add(route.getDestiny());
+
+        arc.add(route.getOrigin());
+        arc.add(route.getDestiny());
+
+        evaluateCurrentDepot();
+        evaluateOrderedRoutes();
+    }
+
+
+    private void evaluateCurrentDepot() {
+        if(getDestiny().isDepot()) {
+            currentDepot = getDestiny();
+            return;
+        }
+
+        if(getOrigin().isDepot())
+            currentDepot = getOrigin();
+    }
+
+    private void evaluateOrderedRoutes() {
+        if(route.isSynthetic()) {
+            orderedRoutes = ((SyntheticRoute) route).getOrderedRoutes();
+            return;
+        }
+
+        orderedRoutes = Collections.singletonList((OrderedRoute) route);
     }
 
     @Override
@@ -55,19 +85,13 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
     }
 
     @Override
-    public boolean isSynthetic() {
-        return route instanceof SyntheticRoute;
+    public Location getCurrentDepot() {
+        return currentDepot;
     }
 
     @Override
-    public Location getCurrentDepot() {
-        if(getDestiny().isDepot())
-            return getDestiny();
-
-        if(getOrigin().isDepot())
-            return getOrigin();
-
-        return null;
+    public List<OrderedRoute> getOrderedRoutes() {
+        return orderedRoutes;
     }
 
     @Override
@@ -95,6 +119,5 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
 
         return this.equalsRoute(otherRoute);
     }
-
 
 }

@@ -70,4 +70,9 @@ public class SimpleCalculatedRoute implements CalculatedRoute{
     public Location getCurrentDepot() {
         return null;
     }
+
+    @Override
+    public List<OrderedRoute> getOrderedRoutes() {
+        return null;
+    }
 }

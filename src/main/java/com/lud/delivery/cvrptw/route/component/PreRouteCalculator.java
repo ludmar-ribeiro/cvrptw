@@ -1,6 +1,5 @@
 package com.lud.delivery.cvrptw.route.component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.CalculatedRouteMap;
+import com.lud.delivery.cvrptw.route.domain.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.Route;
-import com.lud.delivery.cvrptw.route.domain.SyntheticRoute;
+import com.lud.delivery.cvrptw.route.domain.wrapper.SyntheticRouteWrapper;
 
 @Component
 public class PreRouteCalculator {
@@ -45,13 +45,13 @@ public class PreRouteCalculator {
         if(!routeA.getOrigin().equals(routeB.getOrigin()))
             return;
 
-        Route route = new SyntheticRoute(routeA.getDestiny(), routeB.getDestiny(), routeB.getPickupTime(), routeB.getDeliveryTime());
+        Route route = new SyntheticRouteWrapper(routeA.getDestiny(), (OrderedRoute) routeB);
 
         calculateRoute(routeMap, route);
     }
 
     private void createRouteDestinyToOrigin(CalculatedRouteMap routeMap, Route routeA, Route routeB) {
-        Route route = new SyntheticRoute(routeA.getDestiny(), routeB.getOrigin(), LocalDateTime.MIN, LocalDateTime.MAX);
+        Route route = new SyntheticRouteWrapper(routeA.getDestiny(), routeB.getOrigin());
 
         calculateRoute(routeMap, route);
     }

@@ -64,9 +64,9 @@ public class RouteCalculatorTest {
 
         List<CalculatedRoute> results = calculator.calculate(routes);
 
-        assertEquals(results.size(), 1);
-        assertEquals(results.get(0).getArc().size(), 6);
-        assertEquals(results.get(0).getArc().stream().filter(l -> !l.isDepot()).count(), 4);
+        assertEquals(1, results.size());
+        assertEquals(6, results.get(0).getArc().size());
+        assertEquals(4, results.get(0).getOrderedRoutes().size());
 
         Double expectedTravelTime = calculateTravelTime(results.get(0).getArc());
         assertEquals(expectedTravelTime, results.get(0).getTravelTime());
@@ -81,14 +81,14 @@ public class RouteCalculatorTest {
     public void testCalculateDifferentRestaurants() {
         List<Route> routes = data.getOrderedRoutes()
                 .stream()
-                .limit(6)
+                .limit(8)
                 .collect(Collectors.toList());
 
         List<CalculatedRoute> results = calculator.calculate(routes);
 
-        assertEquals(results.size(), 1);
-        assertEquals(results.get(0).getArc().size(), 9);
-        assertEquals(results.get(0).getArc().stream().filter(l -> !l.isDepot()).count(), 6);
+        assertEquals(1, results.size());
+        assertEquals(12, results.get(0).getArc().size());
+        assertEquals(8, results.get(0).getOrderedRoutes().size());
 
         Double expectedTravelTime = calculateTravelTime(results.get(0).getArc());
         assertEquals(expectedTravelTime, results.get(0).getTravelTime());

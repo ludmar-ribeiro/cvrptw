@@ -18,11 +18,12 @@ import com.lud.delivery.cvrptw.common.json.IdentifiableSerializer;
 import com.lud.delivery.cvrptw.restaurant.domain.Restaurant;
 import com.lud.delivery.cvrptw.restaurant.json.RestaurantGetterDeserializer;
 import com.lud.delivery.cvrptw.route.domain.Location;
+import com.lud.delivery.cvrptw.route.domain.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.Route;
 
 @Entity
 @Table(name="PURCHASE_ORDER")
-public class Order implements Identifiable<Integer>, Route{
+public class Order implements Identifiable<Integer>, OrderedRoute{
 
     @Id
     @NotNull
