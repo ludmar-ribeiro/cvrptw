@@ -3,8 +3,8 @@ package com.lud.delivery.cvrptw.route.constraint;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
-import com.lud.delivery.cvrptw.route.domain.RouteWorkset;
+import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.workset.RouteCalculationWorkset;
 
 @Component
 public class CapacityConstraint implements RouteConstraint{
@@ -13,7 +13,7 @@ public class CapacityConstraint implements RouteConstraint{
     private Integer capacity;
 
     @Override
-    public boolean isAllowed(CalculatedRoute candidate, CalculatedRoute rootRoute, RouteWorkset workset) {
+    public boolean isAllowed(CalculatedRoute candidate, CalculatedRoute rootRoute, RouteCalculationWorkset workset) {
         if(candidate.getDestiny().isDepot())
             return true;
 

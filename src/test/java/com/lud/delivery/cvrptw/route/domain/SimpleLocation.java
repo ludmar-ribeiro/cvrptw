@@ -1,5 +1,7 @@
 package com.lud.delivery.cvrptw.route.domain;
 
+import com.lud.delivery.cvrptw.route.domain.location.Location;
+
 public class SimpleLocation implements Location {
     private Double lat;
     private Double lon;

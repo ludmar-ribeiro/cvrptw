@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 import com.lud.delivery.cvrptw.common.domain.Identifiable;
-import com.lud.delivery.cvrptw.route.domain.Location;
+import com.lud.delivery.cvrptw.route.domain.location.Location;
 
 @Entity
 public class Client implements Identifiable<Integer>, Location{

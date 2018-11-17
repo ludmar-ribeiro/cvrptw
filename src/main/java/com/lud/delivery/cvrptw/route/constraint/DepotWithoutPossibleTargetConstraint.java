@@ -3,10 +3,10 @@ package com.lud.delivery.cvrptw.route.constraint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.lud.delivery.cvrptw.route.component.PossibleRouteEvaluator;
-import com.lud.delivery.cvrptw.route.domain.CalculatedRoute;
-import com.lud.delivery.cvrptw.route.domain.RouteWorkset;
-import com.lud.delivery.cvrptw.route.domain.composite.CompositeCalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.route.composite.CompositeCalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.workset.RouteCalculationWorkset;
+import com.lud.delivery.cvrptw.route.evaluator.PossibleRouteEvaluator;
 
 @Component
 public class DepotWithoutPossibleTargetConstraint implements RouteConstraint{
@@ -15,7 +15,7 @@ public class DepotWithoutPossibleTargetConstraint implements RouteConstraint{
     private PossibleRouteEvaluator possibleRouteEvaluator;
 
     @Override
-    public boolean isAllowed(CalculatedRoute candidate, CalculatedRoute rootRoute, RouteWorkset workset) {
+    public boolean isAllowed(CalculatedRoute candidate, CalculatedRoute rootRoute, RouteCalculationWorkset workset) {
         if(!candidate.getDestiny().isDepot())
             return true;
 
@@ -27,7 +27,7 @@ public class DepotWithoutPossibleTargetConstraint implements RouteConstraint{
                 .count() > 0;
     }
 
-    private CalculatedRoute simulateRoute(RouteWorkset workset, CalculatedRoute rootRoute, CalculatedRoute candidate) {
+    private CalculatedRoute simulateRoute(RouteCalculationWorkset workset, CalculatedRoute rootRoute, CalculatedRoute candidate) {
 
         return new CompositeCalculatedRoute(rootRoute, candidate);
     }

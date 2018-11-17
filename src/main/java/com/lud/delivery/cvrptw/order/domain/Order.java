@@ -17,9 +17,9 @@ import com.lud.delivery.cvrptw.common.domain.Identifiable;
 import com.lud.delivery.cvrptw.common.json.IdentifiableSerializer;
 import com.lud.delivery.cvrptw.restaurant.domain.Restaurant;
 import com.lud.delivery.cvrptw.restaurant.json.RestaurantGetterDeserializer;
-import com.lud.delivery.cvrptw.route.domain.Location;
-import com.lud.delivery.cvrptw.route.domain.OrderedRoute;
-import com.lud.delivery.cvrptw.route.domain.Route;
+import com.lud.delivery.cvrptw.route.domain.location.Location;
+import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
+import com.lud.delivery.cvrptw.route.domain.route.Route;
 
 @Entity
 @Table(name="PURCHASE_ORDER")

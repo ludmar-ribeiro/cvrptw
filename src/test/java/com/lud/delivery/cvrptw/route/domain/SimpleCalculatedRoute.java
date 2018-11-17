@@ -3,6 +3,10 @@ package com.lud.delivery.cvrptw.route.domain;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.lud.delivery.cvrptw.route.domain.location.Location;
+import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
+
 public class SimpleCalculatedRoute implements CalculatedRoute{
 
     private LocalDateTime pickupTime;
@@ -74,5 +78,19 @@ public class SimpleCalculatedRoute implements CalculatedRoute{
     @Override
     public List<OrderedRoute> getOrderedRoutes() {
         return null;
+    }
+
+    @Override
+    public OrderedRoute getLastDelivered() {
+        return null;
+    }
+
+    @Override
+    public Double getLateDeliveryTime() {
+        return null;
+    }
+
+    @Override
+    public void setLateDeliveryTime(Double lateDeliveryTime) {
     }
 }
