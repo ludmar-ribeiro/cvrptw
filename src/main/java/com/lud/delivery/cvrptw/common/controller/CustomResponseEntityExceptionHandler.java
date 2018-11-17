@@ -23,13 +23,13 @@ import com.lud.delivery.cvrptw.common.domain.ErrorRequestBody;
 import com.lud.delivery.cvrptw.common.domain.ErrorRequestBody.ErrorRequestBodyBuilder;
 import com.lud.delivery.cvrptw.common.exception.NotFoundException;
 import com.lud.delivery.cvrptw.common.exception.ObjectExistsForIdException;
-import com.lud.delivery.cvrptw.common.exception.resolver.MessageResolverRouter;
+import com.lud.delivery.cvrptw.common.exception.resolver.MessageResolver;
 
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler{
 
     @Autowired
-    private MessageResolverRouter messageResolver;
+    private MessageResolver messageResolver;
 
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<Object> handleNotFound(NotFoundException ex, WebRequest request) {
