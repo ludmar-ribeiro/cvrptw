@@ -8,22 +8,30 @@ import com.lud.delivery.cvrptw.common.utils.DateTimeUtils;
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
 
 @Component
-@Order(2)
-public class NewRoutesByPickupTimeRule implements SortingRule<CalculatedRoute>{
+@Order(3)
+public class NewRoutesByDeliveryTimeRule implements SortingRule<CalculatedRoute>{
 
     @Override
     public int compare(CalculatedRoute route1, CalculatedRoute route2) {
         if(route1.getDestiny().isDepot() || route2.getDestiny().isDepot())
             return 0;
 
+
         Long numberOfOrderedRoutes2 = getNumberOfOrderedRoutes(route2);
         Long numberOfOrderedRoutes1 = getNumberOfOrderedRoutes(route1);
 
         if(numberOfOrderedRoutes1.equals(Long.valueOf(1)) && numberOfOrderedRoutes2.equals(Long.valueOf(1)))
-            return DateTimeUtils.ignoreSeconds(
-                            route1.getPickupTime())
-                    .compareTo(DateTimeUtils.ignoreSeconds(
-                            route2.getPickupTime()));
+            return DateTimeUtils
+                    .ignoreSeconds(
+                            route1
+                                .getLastDelivered()
+                                    .getDeliveryTime())
+                    .compareTo(
+                            DateTimeUtils
+                                .ignoreSeconds(
+                                        route2
+                                            .getLastDelivered()
+                                                .getDeliveryTime()));
 
         return 0;
     }

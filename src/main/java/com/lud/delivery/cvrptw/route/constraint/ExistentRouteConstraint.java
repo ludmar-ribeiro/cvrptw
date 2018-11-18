@@ -1,13 +1,18 @@
 package com.lud.delivery.cvrptw.route.constraint;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
-import com.lud.delivery.cvrptw.route.domain.route.composite.CompositeCalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.route.fullRoute.FullCalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.route.fullRoute.FullCalculatedRouteFactory;
 import com.lud.delivery.cvrptw.route.domain.workset.RouteCalculationWorkset;
 
 @Component
 public class ExistentRouteConstraint implements RouteConstraint{
+
+    @Autowired
+    private FullCalculatedRouteFactory fullCalculatedRouteFactory;
 
     @Override
     public boolean isAllowed(CalculatedRoute candidate, CalculatedRoute rootRoute, RouteCalculationWorkset workset) {
@@ -21,6 +26,6 @@ public class ExistentRouteConstraint implements RouteConstraint{
 
     private CalculatedRoute simulateRoute(RouteCalculationWorkset workset, CalculatedRoute rootRoute, CalculatedRoute candidate) {
 
-        return new CompositeCalculatedRoute(rootRoute, candidate);
+        return fullCalculatedRouteFactory.of(rootRoute, candidate);
     }
 }

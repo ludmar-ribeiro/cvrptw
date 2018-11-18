@@ -7,7 +7,7 @@ import com.lud.delivery.cvrptw.common.comparator.rule.SortingRule;
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
 
 @Component
-@Order(4)
+@Order(5)
 public class FastestRouteRule implements SortingRule<CalculatedRoute>{
 
     @Override

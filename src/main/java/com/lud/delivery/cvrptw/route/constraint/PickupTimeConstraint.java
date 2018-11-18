@@ -13,17 +13,15 @@ public class PickupTimeConstraint implements RouteConstraint{
 
     @Override
     public boolean isAllowed(CalculatedRoute candidate, CalculatedRoute rootRoute, RouteCalculationWorkset workset) {
-        LocalDateTime arrivalTime = DateTimeUtils
-                .ignoreMilliseconds(
-                        DateTimeUtils
-                            .addMilliseconds(
-                                        rootRoute.getDeliveryTime(),
-                                        candidate.getTravelTime()));
+        if(candidate.getDestiny().isDepot())
+            return true;
 
-        return !arrivalTime
+        LocalDateTime currentDepotArrivalTime = DateTimeUtils
+                .ignoreSeconds(rootRoute.getCurrentDepotArrivalTime());
+
+        return !currentDepotArrivalTime
                 .isBefore(DateTimeUtils
-                               .ignoreMilliseconds(
+                               .ignoreSeconds(
                                        candidate.getPickupTime()));
     }
-
 }

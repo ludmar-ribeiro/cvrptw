@@ -61,7 +61,7 @@ public class SimpleCalculatedRoute implements CalculatedRoute{
     }
 
     @Override
-    public List<Location> getArc() {
+    public List<Location> getLocations() {
         return null;
     }
 
@@ -92,5 +92,11 @@ public class SimpleCalculatedRoute implements CalculatedRoute{
 
     @Override
     public void setLateDeliveryTime(Double lateDeliveryTime) {
+    }
+
+    @Override
+    public LocalDateTime getCurrentDepotArrivalTime() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }

@@ -11,6 +11,7 @@ public class TargetVisitedOnceConstraint implements RouteConstraint{
     @Override
     public boolean isAllowed(CalculatedRoute candidate, CalculatedRoute routeRoute, RouteCalculationWorkset workset) {
         return candidate.getDestiny().isDepot() 
-                || !routeRoute.getArc().contains(candidate.getDestiny());
+                || !routeRoute.getOrderedRoutes()
+                        .contains(candidate.getLastDelivered());
     }
 }

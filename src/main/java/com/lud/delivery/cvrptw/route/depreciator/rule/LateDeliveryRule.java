@@ -5,7 +5,6 @@ import java.time.temporal.ChronoUnit;
 
 import org.springframework.stereotype.Component;
 
-import com.lud.delivery.cvrptw.common.utils.DateTimeUtils;
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.workset.RouteCalculationWorkset;
@@ -18,7 +17,7 @@ public class LateDeliveryRule implements DepreciationRule{
         if(route.getDestiny().isDepot())
             return;
 
-        LocalDateTime deliveredTime = DateTimeUtils.ignoreMilliseconds(route.getDeliveryTime());
+        LocalDateTime deliveredTime = route.getDeliveryTime();
         LocalDateTime shouldDeliverTime = getShouldDeliverTime(route);
 
         Double lateTime = Double.valueOf(ChronoUnit.NANOS.between(deliveredTime, shouldDeliverTime));

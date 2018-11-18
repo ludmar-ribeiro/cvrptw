@@ -20,13 +20,13 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
 
     private Location currentDepot;
 
-    private List<Location> arc = new LinkedList<>();
+    private List<Location> locations = new LinkedList<>();
 
     private List<OrderedRoute> orderedRoutes;
 
     private OrderedRoute lastDelivered;
 
-    private Double lateDeliveryTime = Double.valueOf(0); 
+    private Double lateDeliveryTime = Double.valueOf(0);
 
     public CalculatedRouteWrapper(Route route) {
         this.route = route;
@@ -35,8 +35,8 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
     }
 
     private void evaluateAttributes(Route route) {
-        arc.add(route.getOrigin());
-        arc.add(route.getDestiny());
+        locations.add(route.getOrigin());
+        locations.add(route.getDestiny());
 
         evaluateCurrentDepot();
         evaluateOrderedRoutes();
@@ -74,6 +74,9 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
 
     @Override
     public LocalDateTime getDeliveryTime() {
+        if(getDestiny().isDepot())
+           return route.getDeliveryTime(); 
+
         return DateTimeUtils.addMilliseconds(route.getPickupTime(), travelTime);
     }
 
@@ -103,13 +106,21 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
     }
 
     @Override
+    public LocalDateTime getCurrentDepotArrivalTime() {
+        if(getDestiny().isDepot())
+            return getDeliveryTime();
+
+        return getPickupTime();
+    }
+
+    @Override
     public List<OrderedRoute> getOrderedRoutes() {
         return orderedRoutes;
     }
 
     @Override
-    public List<Location> getArc() {
-        return arc; 
+    public List<Location> getLocations() {
+        return locations; 
     }
 
     @Override

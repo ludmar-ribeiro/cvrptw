@@ -17,13 +17,13 @@ public class CapacityConstraint implements RouteConstraint{
         if(candidate.getDestiny().isDepot())
             return true;
 
-        if(rootRoute.getArc().size() < capacity)
+        if(rootRoute.getLocations().size() < capacity)
             return true;
 
         return rootRoute
-                .getArc()
+                .getLocations()
                     .stream()
-                        .skip(rootRoute.getArc().size() - capacity)
+                        .skip(rootRoute.getLocations().size() - capacity)
                         .filter(l -> !l.isDepot())
                .count() < capacity;
     }

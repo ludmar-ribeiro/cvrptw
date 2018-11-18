@@ -15,13 +15,13 @@ import com.lud.delivery.cvrptw.route.domain.route.wrapper.SyntheticRouteWrapper;
 public class PreRouteCalculator {
 
     @Autowired
-    private SubRouteCalculator subRouteCalculator;
+    private RouteCalculator routeCalculator;
 
     public CalculatedRouteMap calculate(List<Route> routes) {
 
         CalculatedRouteMap routeMap = new CalculatedRouteMap();
 
-        routeMap.putAll(subRouteCalculator.calculate(routes));
+        routeMap.putAll(routeCalculator.calculate(routes));
 
         for(Route routeA: routes) {
             for(Route routeB: routes) {
@@ -57,7 +57,7 @@ public class PreRouteCalculator {
     }
 
     private void calculateRoute(CalculatedRouteMap routeMap, Route route) {
-        CalculatedRoute calculatedRoute = subRouteCalculator.calculate(route);
+        CalculatedRoute calculatedRoute = routeCalculator.calculate(route);
 
         if(!routeMap.get(calculatedRoute.getOrigin(), calculatedRoute.getDestiny()).contains(calculatedRoute))
             routeMap.put(calculatedRoute);
