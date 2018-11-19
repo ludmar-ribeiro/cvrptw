@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.lud.delivery.cvrptw.route.comparator.RouteComparator;
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
-import com.lud.delivery.cvrptw.route.domain.route.CalculatedRouteMap;
+import com.lud.delivery.cvrptw.route.domain.route.map.CalculatedRouteMap;
 import com.lud.delivery.cvrptw.route.domain.workset.RouteCalculationWorkset;
 
 import javafx.collections.FXCollections;

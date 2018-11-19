@@ -9,8 +9,6 @@ public interface CalculatedRoute extends SyntheticRoute {
 
     Double getTravelTime();
 
-    void setTravelTime(Double calculate);
-
     List<Location> getLocations();
 
     Location getCurrentDepot();

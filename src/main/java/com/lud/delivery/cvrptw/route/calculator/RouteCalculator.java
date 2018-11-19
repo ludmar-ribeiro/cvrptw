@@ -8,13 +8,17 @@ import org.springframework.stereotype.Component;
 
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.Route;
-import com.lud.delivery.cvrptw.route.domain.route.wrapper.CalculatedRouteWrapper;
+import com.lud.delivery.cvrptw.route.domain.route.pointToPointRoute.PointToPointCalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.route.pointToPointRoute.PointToPointCalculatedRouteFactory;
 
 @Component
 public class RouteCalculator {
 
     @Autowired
     TravelTimeCalculator travelTimeCalculator;
+
+    @Autowired
+    PointToPointCalculatedRouteFactory factory;
 
     public List<CalculatedRoute> calculate(List<Route> routes) {
         return routes
@@ -27,12 +31,8 @@ public class RouteCalculator {
         if(route instanceof CalculatedRoute)
             return (CalculatedRoute) route;
 
-        return calculate(new CalculatedRouteWrapper(route)); 
-    }
-
-    private CalculatedRoute calculate(CalculatedRoute route) {
-        route.setTravelTime(travelTimeCalculator.calculate(route.getOrigin(), route.getDestiny()));
-
-        return route;
+        return factory.of(
+                route, 
+                travelTimeCalculator.calculate(route.getOrigin(), route.getDestiny())); 
     }
 }

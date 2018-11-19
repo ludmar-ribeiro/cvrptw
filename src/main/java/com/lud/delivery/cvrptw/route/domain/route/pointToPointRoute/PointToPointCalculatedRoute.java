@@ -1,7 +1,6 @@
-package com.lud.delivery.cvrptw.route.domain.route.wrapper;
+package com.lud.delivery.cvrptw.route.domain.route.pointToPointRoute;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,11 +9,15 @@ import com.lud.delivery.cvrptw.route.domain.location.Location;
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.Route;
-import com.lud.delivery.cvrptw.route.domain.route.SyntheticRoute;
 
-public class CalculatedRouteWrapper implements CalculatedRoute {
+public class PointToPointCalculatedRoute implements CalculatedRoute {
 
-    private Route route;
+    private Location origin;
+    private Location destiny;
+    
+    private LocalDateTime pickupTime;
+    
+    private LocalDateTime deliveryTime;
 
     private Double travelTime;
 
@@ -28,56 +31,19 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
 
     private Double lateDeliveryTime = Double.valueOf(0);
 
-    public CalculatedRouteWrapper(Route route) {
-        this.route = route;
+    private LocalDateTime currentDepotArrivalTime;
 
-        evaluateAttributes(route);
-    }
-
-    private void evaluateAttributes(Route route) {
-        locations.add(route.getOrigin());
-        locations.add(route.getDestiny());
-
-        evaluateCurrentDepot();
-        evaluateOrderedRoutes();
-        evaluateLastDelivered();
-    }
-
-    private void evaluateCurrentDepot() {
-        if(getDestiny().isDepot()) {
-            currentDepot = getDestiny();
-            return;
-        }
-
-        if(getOrigin().isDepot())
-            currentDepot = getOrigin();
-    }
-
-    private void evaluateOrderedRoutes() {
-        if(route.isSynthetic()) {
-            orderedRoutes = ((SyntheticRoute) route).getOrderedRoutes();
-            return;
-        }
-
-        orderedRoutes = Collections.singletonList((OrderedRoute) route);
-    }
-
-    private void evaluateLastDelivered() {
-        if(!orderedRoutes.isEmpty())
-            lastDelivered = orderedRoutes.get(0);
+    protected PointToPointCalculatedRoute() {
     }
 
     @Override
     public LocalDateTime getPickupTime() {
-        return route.getPickupTime();
+        return pickupTime;
     }
 
     @Override
     public LocalDateTime getDeliveryTime() {
-        if(getDestiny().isDepot())
-           return route.getDeliveryTime(); 
-
-        return DateTimeUtils.addMilliseconds(route.getPickupTime(), travelTime);
+        return deliveryTime;
     }
 
     @Override
@@ -87,17 +53,12 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
 
     @Override
     public Location getOrigin() {
-        return route.getOrigin();
+        return origin;
     }
 
     @Override
     public Location getDestiny() {
-        return route.getDestiny();
-    }
-
-    @Override
-    public void setTravelTime(Double travelTime) {
-        this.travelTime = travelTime;
+        return destiny;
     }
 
     @Override
@@ -107,10 +68,7 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
 
     @Override
     public LocalDateTime getCurrentDepotArrivalTime() {
-        if(getDestiny().isDepot())
-            return getDeliveryTime();
-
-        return getPickupTime();
+        return currentDepotArrivalTime;
     }
 
     @Override
@@ -136,6 +94,46 @@ public class CalculatedRouteWrapper implements CalculatedRoute {
     @Override
     public void setLateDeliveryTime(Double lateDeliveryTime) {
         this.lateDeliveryTime = lateDeliveryTime;
+    }
+
+    protected void setOrigin(Location origin) {
+        this.origin = origin;
+    }
+
+    protected void setDestiny(Location destiny) {
+        this.destiny = destiny;
+    }
+
+    protected void setPickupTime(LocalDateTime pickupTime) {
+        this.pickupTime = pickupTime;
+    }
+
+    protected void setDeliveryTime(LocalDateTime deliveryTime) {
+        this.deliveryTime = deliveryTime;
+    }
+
+    protected void setTravelTime(Double travelTime) {
+        this.travelTime = travelTime;
+    }
+
+    protected void setCurrentDepot(Location currentDepot) {
+        this.currentDepot = currentDepot;
+    }
+
+    protected void setLocations(List<Location> locations) {
+        this.locations = locations;
+    }
+
+    protected void setOrderedRoutes(List<OrderedRoute> orderedRoutes) {
+        this.orderedRoutes = orderedRoutes;
+    }
+
+    protected void setLastDelivered(OrderedRoute lastDelivered) {
+        this.lastDelivered = lastDelivered;
+    }
+
+    protected void setCurrentDepotArrivalTime(LocalDateTime currentDepotArrivalTime) {
+        this.currentDepotArrivalTime = currentDepotArrivalTime;
     }
 
     @Override

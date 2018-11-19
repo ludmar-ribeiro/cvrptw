@@ -1,4 +1,4 @@
-package com.lud.delivery.cvrptw.route.domain.route;
+package com.lud.delivery.cvrptw.route.domain.route.map;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import com.lud.delivery.cvrptw.route.domain.location.Location;
+import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 
 public class CalculatedRouteMap {
 

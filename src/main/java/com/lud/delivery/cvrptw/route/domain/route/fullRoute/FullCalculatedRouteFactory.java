@@ -11,7 +11,6 @@ public class FullCalculatedRouteFactory {
 
         FullCalculatedRoute fullRoute = new FullCalculatedRoute(); 
 
-
         evaluateAttributes(fullRoute, routeA, routeB);
 
         return fullRoute;
@@ -22,7 +21,7 @@ public class FullCalculatedRouteFactory {
         fullRoute.setOrigin(routeA.getOrigin());
         fullRoute.setDestiny(routeB.getDestiny());
 
-        fullRoute.setTravelTimeProtected(routeA.getTravelTime() + routeB.getTravelTime());
+        fullRoute.setTravelTime(routeA.getTravelTime() + routeB.getTravelTime());
 
         fullRoute.setPickupTime(routeA.getPickupTime());
         fullRoute.setDeliveryTime(DateTimeUtils.addMilliseconds(routeA.getDeliveryTime(), routeB.getTravelTime()));

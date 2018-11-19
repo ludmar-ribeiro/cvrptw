@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
-import com.lud.delivery.cvrptw.route.domain.route.CalculatedRouteMap;
 import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.Route;
+import com.lud.delivery.cvrptw.route.domain.route.map.CalculatedRouteMap;
 import com.lud.delivery.cvrptw.route.domain.route.wrapper.SyntheticRouteWrapper;
 
 @Component

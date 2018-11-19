@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
-import com.lud.delivery.cvrptw.route.domain.route.CalculatedRouteMap;
+import com.lud.delivery.cvrptw.route.domain.route.map.CalculatedRouteMap;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;

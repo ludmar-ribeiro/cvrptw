@@ -59,11 +59,6 @@ public class FullCalculatedRoute implements CalculatedRoute {
     }
 
     @Override
-    public void setTravelTime(Double travelTime) {
-        //Do nothing
-    }
-
-    @Override
     public Location getCurrentDepot() {
         return currentDepot;
     }
@@ -98,7 +93,7 @@ public class FullCalculatedRoute implements CalculatedRoute {
         this.lateDeliveryTime = lateDeliveryTime;
     }
 
-    protected void setTravelTimeProtected(Double travelTime) {
+    protected void setTravelTime(Double travelTime) {
         this.travelTime = travelTime;
     }
 
