@@ -25,12 +25,28 @@ import com.lud.delivery.cvrptw.common.exception.NotFoundException;
 import com.lud.delivery.cvrptw.common.exception.ObjectExistsForIdException;
 import com.lud.delivery.cvrptw.common.exception.resolver.MessageResolver;
 
+/**
+ * Handles all REST api's response when exceptions are caught 
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler{
 
+    /**
+     * Exception message resolver
+     */
     @Autowired
     private MessageResolver messageResolver;
 
+    /**
+     * Handles {@link NotFoundException}
+     *
+     * @param ex
+     * @param request
+     * @return {@link ResponseEntity}
+     */
     @ExceptionHandler(NotFoundException.class)
     protected ResponseEntity<Object> handleNotFound(NotFoundException ex, WebRequest request) {
 
@@ -39,6 +55,13 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    /**
+     * Handles {@link ObjectExistsForIdException}
+     *
+     * @param ex
+     * @param request
+     * @return {@link ResponseEntity}
+     */
     @ExceptionHandler(ObjectExistsForIdException.class)
     protected ResponseEntity<Object> handleAlreadyExists(ObjectExistsForIdException ex, WebRequest request) {
 
@@ -47,6 +70,13 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return handleExceptionInternal(ex, body, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
+    /**
+     * Handles {@link MethodArgumentTypeMismatchException}
+     *
+     * @param ex
+     * @param request
+     * @return {@link ResponseEntity}
+     */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Object> handleRequestArgumentParseProblem(MethodArgumentTypeMismatchException ex, WebRequest request) {
         ErrorRequestBody body = createBody(ex, request, HttpStatus.BAD_REQUEST);
@@ -55,6 +85,15 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
     }
 
 
+    /**
+     * Handles {@link MethodArgumentNotValidException}
+     *
+     * @param ex
+     * @param headers
+     * @param status
+     * @param request
+     * @return {@link ResponseEntity}
+     */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
@@ -63,6 +102,18 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return handleExceptionInternal(ex, body, headers, HttpStatus.BAD_REQUEST, request);
     }
 
+    /**
+     * Handles {@link HttpMessageNotReadableException}
+     *
+     * Redirects to handleNotFound(ex, request) when a {@link NotFoundException} is
+     * identified as the cause 
+     *
+     * @param ex
+     * @param headers
+     * @param status
+     * @param request
+     * @return {@link ResponseEntity}
+     */
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         Throwable exception = ex;
@@ -79,6 +130,14 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return handleExceptionInternal(ex, body, headers, HttpStatus.BAD_REQUEST, request);
     }
 
+    /**
+     * Creates the response entity's body
+     *
+     * @param ex
+     * @param request
+     * @param status
+     * @return {@link ErrorRequestBody}
+     */
     private ErrorRequestBody createBody(Exception ex, WebRequest request, HttpStatus status) {
         String message = messageResolver.resolveMessage(ex);
 
@@ -87,6 +146,15 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return createBody(request, status, message, messages);
     }
 
+    /**
+     * Creates the response entity's body
+     *
+     * @param request
+     * @param status
+     * @param message
+     * @param messages
+     * @return {@link ErrorRequestBody}
+     */
     private ErrorRequestBody createBody(WebRequest request, HttpStatus status, String message, List<String> messages) {
         String uri = ((ServletWebRequest) request)
                 .getRequest()
@@ -101,6 +169,12 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
                 .build();
     }
 
+    /**
+     * Handles {@link FieldError} messages when the exception contains it
+     *
+     * @param ex
+     * @return {@link List} of {@link String}
+     */
     private List<String> resolveFieldErrors(Exception ex) {
 
         if(ex instanceof MethodArgumentNotValidException)
@@ -114,6 +188,12 @@ public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptio
         return null;
     }
 
+    /**
+     * Resolve the message of a {@link FieldError}
+     *
+     * @param fieldError
+     * @return {@link String}
+     */
     private String resolveMessage(FieldError fieldError) {
         
         String field = fieldError.getField();

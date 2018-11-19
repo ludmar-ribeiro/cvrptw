@@ -9,16 +9,44 @@ import com.lud.delivery.cvrptw.route.domain.route.map.CalculatedRouteMap;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 
+/**
+ * Route calculation Workset
+ *
+ * The POJO that holds all information needed for the route calculation process
+ * 
+ * @author Ludmar Ribeiro
+ *
+ */
 public class RouteCalculationWorkset {
 
+    /**
+     * Map of point-to-point calculated routes
+     */
     private CalculatedRouteMap map;
 
+    /**
+     * Set of all routes created during the calculation process
+     */
     private Set<CalculatedRoute> routes;
 
+    /**
+     * The open routes, source for the sortedOpenRoutes
+     */
     private ObservableList<CalculatedRoute> openRoutes;
+
+    /**
+     * The sorted open routes, the routes that new steps could be calculated
+     */
     private SortedList<CalculatedRoute> sortedOpenRoutes;
 
+    /**
+     * The closed routes, source for the sortedClosedRoutes
+     */
     private ObservableList<CalculatedRoute> closedRoutes;
+
+    /**
+     * The sorted close routes, the routes that all possible next steps was calculated
+     */
     private SortedList<CalculatedRoute> sortedClosedRoutes;
 
 

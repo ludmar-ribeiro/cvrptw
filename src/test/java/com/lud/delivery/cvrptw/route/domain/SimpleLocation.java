@@ -2,6 +2,13 @@ package com.lud.delivery.cvrptw.route.domain;
 
 import com.lud.delivery.cvrptw.route.domain.location.Location;
 
+/**
+ * A POJO that implements the Location to be used as data test
+ * by the Route Calculation related tests. 
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 public class SimpleLocation implements Location {
     private Double lat;
     private Double lon;

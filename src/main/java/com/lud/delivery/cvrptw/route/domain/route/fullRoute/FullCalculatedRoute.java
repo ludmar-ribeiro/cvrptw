@@ -8,7 +8,14 @@ import com.lud.delivery.cvrptw.route.domain.location.Location;
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.Route;
+import com.lud.delivery.cvrptw.route.domain.route.SubRoute;
 
+/**
+ * Full Calculated Route POJO
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 public class FullCalculatedRoute implements CalculatedRoute {
 
 
@@ -29,6 +36,9 @@ public class FullCalculatedRoute implements CalculatedRoute {
 
     private OrderedRoute lastDelivered;
     private Double lateDeliveryTime;
+
+    private List<SubRoute> subRoutes = new LinkedList<>();
+    private SubRoute openSubRoute;
 
     protected FullCalculatedRoute() {
     }
@@ -93,6 +103,16 @@ public class FullCalculatedRoute implements CalculatedRoute {
         this.lateDeliveryTime = lateDeliveryTime;
     }
 
+    @Override
+    public List<SubRoute> getSubRoutes() {
+        return subRoutes;
+    }
+
+    @Override
+    public SubRoute getOpenSubRoute() {
+        return openSubRoute;
+    }
+
     protected void setTravelTime(Double travelTime) {
         this.travelTime = travelTime;
     }
@@ -131,6 +151,14 @@ public class FullCalculatedRoute implements CalculatedRoute {
 
     protected void setLastDelivered(OrderedRoute lastDelivered) {
         this.lastDelivered = lastDelivered;
+    }
+
+    protected void setSubRoutes(List<SubRoute> subRoutes) {
+        this.subRoutes = subRoutes;
+    }
+
+    protected void setOpenSubRoute(SubRoute openSubRoute) {
+        this.openSubRoute = openSubRoute;
     }
 
     @Override

@@ -14,15 +14,38 @@ import org.springframework.stereotype.Component;
 
 import com.lud.delivery.cvrptw.common.message.factory.MessageSourceResolvableFactory;
 
+/**
+ * The message resolver for the exceptions caught
+ *
+ * This component uses some {@link MessageSourceResolvableFactory}
+ * to resolve the message for exceptions using the Sppring's
+ * localization engine
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @Component
 @SuppressWarnings("rawtypes")
 public class MessageResolver {
 
+    /**
+     * {@link Map} of {@link MessageSourceResolvableFactory} by its related type
+     */
     private Map<Class<?>, MessageSourceResolvableFactory> factoriesMap;
 
+    /**
+     * The Springs's localization engine
+     */
     @Autowired
     private MessageSource messageSource;
 
+    /**
+     * Method used to inject the list of {@link MessageSourceResolvableFactory} and
+     * transform it to a {@link Map} of {@link MessageSourceResolvableFactory} 
+     * by its related type
+     *
+     * @param factories
+     */
     @Autowired
     public void setMessageResolvers(List<MessageSourceResolvableFactory<?>> factories) {
         factoriesMap = factories
@@ -31,6 +54,12 @@ public class MessageResolver {
                         Function.identity()));
     }
 
+    /**
+     * Returns a related type of a {@link MessageSourceResolvableFactory}
+     *
+     * @param factory
+     * @return {@link Class} the related type
+     */
     private Class<?> getGenericType(MessageSourceResolvableFactory<?> factory) {
         return ResolvableType.forInstance(factory)
                 .getInterfaces()[0]
@@ -38,6 +67,12 @@ public class MessageResolver {
                 .resolve();
     }
 
+    /**
+     * Resolves the message for a given exception
+     *
+     * @param exception
+     * @return {@link String}
+     */
     public String resolveMessage(Exception exception) {
 
         Exception ex = exception;
@@ -60,6 +95,12 @@ public class MessageResolver {
         return resolveUnknownException(exception);
     }
 
+   /**
+    * Resolves the message for a given exception
+    *
+    * @param exception
+    * @return {@link String}
+    */
     private String resolveExceptionMessage(Exception exception) {
 
         Class<?> clazz = exception.getClass();
@@ -75,10 +116,26 @@ public class MessageResolver {
         return null;
     }
 
+   /**
+    * Resolves the message for a given exception 
+    * with a default {@link MessageSourceResolvableFactory}
+    * if the exception type is unknown 
+    *
+    * @param exception
+    * @return {@link String}
+    */
     private String resolveUnknownException(Exception exception) {
         return resolveExceptionMessage(Exception.class, exception);
     }
 
+    /**
+     * Resolves the message for a given exception 
+     * with the {@link MessageSourceResolvableFactory}
+     * related to the type clazz 
+     *
+     * @param exception
+     * @return {@link String}
+     */
     @SuppressWarnings("unchecked")
     private String resolveExceptionMessage(Class<?> clazz, Exception exception) {
         if(factoriesMap.containsKey(clazz))
@@ -87,6 +144,12 @@ public class MessageResolver {
         return null;
     }
 
+    /**
+     * Resolves the message for a given {@link MessageSourceResolvable} 
+     *
+     * @param messageSourceResolvable
+     * @return {@link String}
+     */
     private String resolveMessage(MessageSourceResolvable messageSourceResolvable) {
         return messageSource.getMessage(messageSourceResolvable, Locale.getDefault());
     }

@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.lud.delivery.cvrptw.common.utils.DateTimeUtils;
 import com.lud.delivery.cvrptw.route.domain.location.Location;
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.Route;
+import com.lud.delivery.cvrptw.route.domain.route.SubRoute;
 
 public class PointToPointCalculatedRoute implements CalculatedRoute {
 
@@ -32,6 +32,9 @@ public class PointToPointCalculatedRoute implements CalculatedRoute {
     private Double lateDeliveryTime = Double.valueOf(0);
 
     private LocalDateTime currentDepotArrivalTime;
+
+    List<SubRoute> subRoutes = new LinkedList<>();
+    SubRoute openSubRoute;
 
     protected PointToPointCalculatedRoute() {
     }
@@ -96,6 +99,14 @@ public class PointToPointCalculatedRoute implements CalculatedRoute {
         this.lateDeliveryTime = lateDeliveryTime;
     }
 
+    public List<SubRoute> getSubRoutes() {
+        return subRoutes;
+    }
+
+    public SubRoute getOpenSubRoute() {
+        return openSubRoute;
+    }
+
     protected void setOrigin(Location origin) {
         this.origin = origin;
     }
@@ -134,6 +145,14 @@ public class PointToPointCalculatedRoute implements CalculatedRoute {
 
     protected void setCurrentDepotArrivalTime(LocalDateTime currentDepotArrivalTime) {
         this.currentDepotArrivalTime = currentDepotArrivalTime;
+    }
+
+    protected void setSubRoutes(List<SubRoute> subRoutes) {
+        this.subRoutes = subRoutes;
+    }
+
+    protected void setOpenSubRoute(SubRoute openSubRoute) {
+        this.openSubRoute = openSubRoute;
     }
 
     @Override

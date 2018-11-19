@@ -5,6 +5,12 @@ import java.util.List;
 
 import org.springframework.context.MessageSourceResolvable;
 
+/**
+ * Wraps a exception for that could be used as a {@link MessageSourceResolvable}  
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 public class ExceptionMessageSourceResolvableWrapper implements MessageSourceResolvable{
 
     private Exception exception;
@@ -17,6 +23,11 @@ public class ExceptionMessageSourceResolvableWrapper implements MessageSourceRes
         this.args = args;
     }
 
+    /**
+     * Returns the message codes
+     *
+     * @return an array of {@link String}
+     */
     @Override
     public String[] getCodes() {
         List<String> codeList = new ArrayList<>();
@@ -34,6 +45,11 @@ public class ExceptionMessageSourceResolvableWrapper implements MessageSourceRes
         return codeList.toArray(new String[]{});
     }
 
+    /**
+     * Returns the arguments to be used by the localization engine
+     *
+     * @return an array of {@link Object}
+     */
     @Override
     public Object[] getArguments() {
         return args;

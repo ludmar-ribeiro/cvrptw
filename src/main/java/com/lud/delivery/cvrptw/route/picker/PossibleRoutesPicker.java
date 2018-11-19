@@ -11,15 +11,36 @@ import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.workset.RouteCalculationWorkset;
 import com.lud.delivery.cvrptw.route.evaluator.PossibleRouteEvaluator;
 
+/**
+ * Possible routes picker
+ *
+ * Component that picks the possible next steps for a route
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @Component
 public class PossibleRoutesPicker {
 
+    /**
+     * Possible route evaluator
+     */
     @Autowired
     private PossibleRouteEvaluator possibleRouteEvaluator;
 
+    /**
+     * Route comparator
+     */
     @Autowired
     private RouteComparator comparator; 
 
+    /**
+     * Picks the possible next steps for a route
+     *
+     * @param route
+     * @param workset
+     * @return
+     */
     public List<CalculatedRoute> pick(CalculatedRoute route, RouteCalculationWorkset workset) {
         return workset
                 .getMap()

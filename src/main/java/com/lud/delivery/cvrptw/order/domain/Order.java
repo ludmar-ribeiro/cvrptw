@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -21,6 +22,12 @@ import com.lud.delivery.cvrptw.route.domain.location.Location;
 import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.Route;
 
+/**
+ * The POJO for Order
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @Entity
 @Table(name="PURCHASE_ORDER")
 public class Order implements Identifiable<Integer>, OrderedRoute{
@@ -94,11 +101,13 @@ public class Order implements Identifiable<Integer>, OrderedRoute{
         this.deliveryTime = deliveryTime;
     }
 
+    @JsonIgnore
     @Override
     public Location getOrigin() {
         return restaurant;
     }
 
+    @JsonIgnore
     @Override
     public Location getDestiny() {
         return client;
@@ -124,5 +133,4 @@ public class Order implements Identifiable<Integer>, OrderedRoute{
 
         return this.equalsRoute(otherRoute);
     }
-
 }

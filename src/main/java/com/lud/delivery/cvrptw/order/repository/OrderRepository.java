@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import com.lud.delivery.cvrptw.order.domain.Order;
 
+/**
+ * The {@link Order} JPS repository
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer>{
 
@@ -31,4 +37,12 @@ public interface OrderRepository extends JpaRepository<Order, Integer>{
             +"AND o.deliveryTime > ?2 "
             +"AND o.deliveryTime <= ?3 ")
     List<Order> searchByRestaurantAndDelivery(Integer restaurantId, LocalDateTime deliveryAfter, LocalDateTime deliveryUntil);
+
+    @Query(value="SELECT * FROM PURCHASE_ORDER o "
+               + "WHERE not exists(SELECT * "
+               + "     FROM DELIVERY_ROUTE_ORDERS dro "
+               + "     WHERE o.ID = dro.ORDERS_ID) "
+               + "ORDER BY o.PICKUP_TIME, o.DELIVERY_TIME, o.ID ",
+            nativeQuery=true)
+    List<Order> getUndeliveredOrders();
 }

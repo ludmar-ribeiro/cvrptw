@@ -10,6 +10,12 @@ import com.lud.delivery.cvrptw.route.domain.location.Location;
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 
+/**
+ * Point-to-point routes map
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 public class CalculatedRouteMap {
 
     Map<Location, Map<Location, Set<CalculatedRoute>>> map = new HashMap<>();

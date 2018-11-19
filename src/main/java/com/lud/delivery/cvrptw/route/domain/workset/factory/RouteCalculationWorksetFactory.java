@@ -16,12 +16,27 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 
+/**
+ * RouteCalculationWorkset factory
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @Component
 public class RouteCalculationWorksetFactory {
 
+    /**
+     * Route comparator
+     */
     @Autowired
     private RouteComparator routeComparator;
 
+    /**
+     * Creates a new {@link RouteCalculationWorkset} from a {@link CalculatedRouteMap} 
+     *
+     * @param routes
+     * @return {@link RouteCalculationWorkset}
+     */
     public RouteCalculationWorkset create(CalculatedRouteMap routes) {
         return new RouteWorksetBuilder()
                 .forRoutes(routes)
@@ -29,6 +44,12 @@ public class RouteCalculationWorksetFactory {
                 .build();
     }
 
+    /**
+     * A Builder for {@link RouteCalculationWorkset}
+     * 
+     * @author Ludmar Ribeiro
+     *
+     */
     private static class RouteWorksetBuilder {
 
         private Comparator<CalculatedRoute> comparator;

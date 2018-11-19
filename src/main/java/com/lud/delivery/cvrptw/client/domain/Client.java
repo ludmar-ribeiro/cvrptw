@@ -4,9 +4,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lud.delivery.cvrptw.common.domain.Identifiable;
 import com.lud.delivery.cvrptw.route.domain.location.Location;
 
+/**
+ * Client POJO, Domain object for Client.
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @Entity
 public class Client implements Identifiable<Integer>, Location{
 
@@ -47,6 +54,7 @@ public class Client implements Identifiable<Integer>, Location{
         this.lon = lon;
     }
 
+    @JsonIgnore
     @Override
     public boolean isDepot() {
         return false;

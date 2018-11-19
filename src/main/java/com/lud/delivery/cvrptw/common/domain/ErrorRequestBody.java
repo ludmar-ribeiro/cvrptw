@@ -9,6 +9,12 @@ import org.springframework.http.HttpStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+/**
+ * A POJO to be used as Response entity body for handled caught exceptions
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @JsonInclude(Include.NON_EMPTY)
 public class ErrorRequestBody {
 
@@ -74,6 +80,12 @@ public class ErrorRequestBody {
         return path;
     }
 
+    /**
+     * A Builder for the {@link ErrorRequestBody}
+     *
+     * @author Ludmar Ribeiro
+     *
+     */
     public static class ErrorRequestBodyBuilder {
         private LocalDateTime timestamp;
         private int status = HttpStatus.INTERNAL_SERVER_ERROR.value();

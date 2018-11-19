@@ -9,9 +9,21 @@ import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.workset.RouteCalculationWorkset;
 
+/**
+ * Rule that adds late delivery time value to route
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @Component
 public class LateDeliveryRule implements DepreciationRule{
 
+    /**
+     * Adds depreciating values to a route
+     *
+     * @param workset
+     * @param route
+     */
     @Override
     public void depreciate(RouteCalculationWorkset workset, CalculatedRoute route) {
         if(route.getDestiny().isDepot())
@@ -28,6 +40,12 @@ public class LateDeliveryRule implements DepreciationRule{
         route.setLateDeliveryTime(route.getLateDeliveryTime() + lateTime);
     }
 
+    /**
+     * Evaluates the time date a ordered route shoul be delivered
+     *
+     * @param route
+     * @return {@link LocalDateTime}
+     */
     private LocalDateTime getShouldDeliverTime(CalculatedRoute route) {
         OrderedRoute lastDelivered = route.getLastDelivered();
 

@@ -2,15 +2,27 @@ package com.lud.delivery.cvrptw.route.domain.route.pointToPointRoute;
 
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lud.delivery.cvrptw.common.utils.DateTimeUtils;
+import com.lud.delivery.cvrptw.route.domain.factory.SubRouteFactory;
 import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.Route;
+import com.lud.delivery.cvrptw.route.domain.route.SubRoute;
 import com.lud.delivery.cvrptw.route.domain.route.SyntheticRoute;
 
+/**
+ * {@link PointToPointCalculatedRoute} Factory
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @Component
 public class PointToPointCalculatedRouteFactory {
+
+    @Autowired
+    private SubRouteFactory subRouteFactory;
 
     public PointToPointCalculatedRoute of(Route route, Double travelTime) {
 
@@ -37,6 +49,16 @@ public class PointToPointCalculatedRouteFactory {
         evaluateOrderedRoutes(calculatedRoute, route);
         evaluateLastDelivered(calculatedRoute);
         evaluateCurrentDepotArrivalTime(calculatedRoute, route);
+        evaluateSubRoutes(calculatedRoute, route);
+    }
+
+    private void evaluateSubRoutes(PointToPointCalculatedRoute calculatedRoute, Route route) {
+        SubRoute open = subRouteFactory.of(calculatedRoute.getCurrentDepot());
+        calculatedRoute.setOpenSubRoute(open);
+        calculatedRoute.getSubRoutes().add(open);
+
+        if(calculatedRoute.getLastDelivered() != null)
+            open.addOrderedRoute(calculatedRoute.getLastDelivered());
     }
 
     private void evaluateDeliveryTime(PointToPointCalculatedRoute calculatedRoute, Route route, Double travelTime) {

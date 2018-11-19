@@ -1,12 +1,35 @@
 package com.lud.delivery.cvrptw.route.domain.route.fullRoute;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.lud.delivery.cvrptw.common.utils.DateTimeUtils;
+import com.lud.delivery.cvrptw.route.domain.factory.SubRouteFactory;
 import com.lud.delivery.cvrptw.route.domain.route.CalculatedRoute;
+import com.lud.delivery.cvrptw.route.domain.route.SubRoute;
 
+/**
+ * {@link FullCalculatedRoute} Factory
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @Component
 public class FullCalculatedRouteFactory {
+
+    /**
+     * SubRoute Factory
+     */
+    @Autowired
+    private SubRouteFactory subRouteFatory;
+
+    /**
+     * Creates a {@link FullCalculatedRoute} from two routes 
+     *
+     * @param routeA
+     * @param routeB
+     * @return {@link FullCalculatedRoute}
+     */
     public FullCalculatedRoute of(CalculatedRoute routeA, CalculatedRoute routeB) {
 
         FullCalculatedRoute fullRoute = new FullCalculatedRoute(); 
@@ -38,6 +61,33 @@ public class FullCalculatedRouteFactory {
         evaluateLastDelivered(fullRoute, routeA, routeB);
 
         fullRoute.setLateDeliveryTime(routeA.getLateDeliveryTime());
+
+        evaluateSubRoutes(fullRoute, routeA, routeB);
+    }
+
+    private void evaluateSubRoutes(FullCalculatedRoute fullRoute, CalculatedRoute routeA, CalculatedRoute routeB) {
+        fullRoute.getSubRoutes().addAll(routeA.getSubRoutes());
+
+        SubRoute open = cloneOpenSubRoute(fullRoute, routeA);
+
+        if(routeB.getDestiny().isDepot()) {
+            open = subRouteFatory.of(routeB.getDestiny());
+            fullRoute.getSubRoutes().add(open);
+        }
+
+        if(!routeB.getDestiny().isDepot())
+            open.addOrderedRoute(routeB.getLastDelivered());
+
+        fullRoute.setOpenSubRoute(open);
+    }
+
+    private SubRoute cloneOpenSubRoute(FullCalculatedRoute fullRoute, CalculatedRoute routeA) {
+        fullRoute.getSubRoutes().remove(routeA.getOpenSubRoute());
+
+        SubRoute open = subRouteFatory.of(routeA.getCurrentDepot());
+        routeA.getOpenSubRoute().getOrderedRoutes().forEach(open::addOrderedRoute);
+        fullRoute.getSubRoutes().add(open);
+        return open;
     }
 
     private void evaluateLastDelivered(FullCalculatedRoute fullRoute, CalculatedRoute routeA, CalculatedRoute routeB) {

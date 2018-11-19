@@ -13,18 +13,39 @@ import com.lud.delivery.cvrptw.route.calculator.TravelTimeCalculator;
 import com.lud.delivery.cvrptw.route.calculator.data.TravelTimeCalculateTestData;
 import com.lud.delivery.cvrptw.route.domain.location.Location;
 
+/**
+ * Test for the travel time calculation logic
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @TestPropertySource("classpath:travel-time-calculator-test.properties")
 public class TravelTimeCalculatorTest {
 
+    /**
+     * Test data
+     */
     @Autowired
     private TravelTimeCalculateTestData data;
 
+    /**
+     * Test subject.
+     *
+     *  The travel time calculation component.
+     */
     @Autowired
     private TravelTimeCalculator calculator;
 
 
+    /**
+     * Test to verify the distance calculation logic.
+     *
+     *
+     * This test verify all controlled cases from the test data.
+     *
+     */
     @Test
     public void testCalculateDistance() {
         for(int i = 0; i< data.getOrigins().size(); i++) {
@@ -38,6 +59,13 @@ public class TravelTimeCalculatorTest {
         }
     }
 
+    /**
+     * Test to verify the distance calculation logic.
+     *
+     *
+     * This test verify all uncontrolled cases from the test data.
+     *
+     */
     @Test
     public void testCalculateDistanceRandomValues() {
         for(int i = 0; i < data.getRandomOrigins().size(); i++ )
@@ -52,6 +80,14 @@ public class TravelTimeCalculatorTest {
         }
     }
 
+    /**
+     * Test to verify the travel time calculation logic.
+     *
+     *
+     * This test verify all controlled cases from the test data.
+     *
+     */
+
     @Test
     public void testCalculate() {
         for(int i = 0; i< data.getOrigins().size(); i++) {
@@ -64,6 +100,14 @@ public class TravelTimeCalculatorTest {
             assertEquals(expectedTravelTime, calculatedTravelTime);
         }
     }
+
+    /**
+     * Test to verify the travel time calculation logic.
+     *
+     *
+     * This test verify all uncontrolled cases from the test data.
+     *
+     */
 
     @Test
     public void testCalculateRandomValues() {

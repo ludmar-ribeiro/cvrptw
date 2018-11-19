@@ -9,6 +9,12 @@ import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.Route;
 import com.lud.delivery.cvrptw.route.domain.route.SyntheticRoute;
 
+/**
+ * Sythetic Route Wrpper for two locations
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 public class SyntheticRouteWrapper implements SyntheticRoute {
 
     private OrderedRoute orderedRoute;
@@ -17,6 +23,14 @@ public class SyntheticRouteWrapper implements SyntheticRoute {
     private LocalDateTime delivery;
     private LocalDateTime pickup;
 
+    /**
+     * Creates a {@link SyntheticRouteWrapper} for two locations
+     * 
+     * Used to create a route back to a depot
+     *
+     * @param origin
+     * @param destiny
+     */
     public SyntheticRouteWrapper(Location origin, Location destiny) {
         this.origin = origin;
         this.destiny = destiny;
@@ -24,6 +38,14 @@ public class SyntheticRouteWrapper implements SyntheticRoute {
         this.delivery = LocalDateTime.MAX;
     }
 
+    /**
+     * Creates a {@link SyntheticRouteWrapper} for a origin and a {@link OrderedRoute}
+     *
+     * Used to create a route between two ordered routes
+     *
+     * @param origin
+     * @param orderedRoute
+     */
     public SyntheticRouteWrapper(Location origin, OrderedRoute orderedRoute) {
         this.orderedRoute = orderedRoute;
         this.origin = origin;

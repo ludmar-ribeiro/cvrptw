@@ -9,12 +9,25 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.lud.delivery.cvrptw.common.domain.Identifiable;
 
-@Component
+/**
+ * Json serializer to parse a {@link Identifiable} as its id
+ *
+ * @author Ludmar Ribeiro
+ *
+ */@Component
 public class IdentifiableSerializer extends JsonSerializer<Identifiable<?>>{
 
+     /**
+      * Parses a {@link Identifiable} to its id and
+      * writes it to a Json
+      *
+      * @param identifiable
+      * @param generator
+      * @param provider
+      * @throws IOException
+      */
     @Override
-    public void serialize(Identifiable<?> object, JsonGenerator generator, SerializerProvider provider) throws IOException {
-        generator.writeObject(object.getId());
+    public void serialize(Identifiable<?> identifiable, JsonGenerator generator, SerializerProvider provider) throws IOException {
+        generator.writeObject(identifiable.getId());
     }
-
 }
