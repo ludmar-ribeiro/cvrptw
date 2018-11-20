@@ -54,33 +54,39 @@ _* Same consideration. The ids are the orders that are picked and delivered in o
 
 ## Pre-defined endpoints:
 
-Create client: POST http://localhost:8080/api/v1/client  
-Update client: PUT http://localhost:8080/api/v1/client  
-Get all client: GET http://localhost:8080/api/v1/client  
-Get one client: GET http://localhost:8080/api/v1/client/{id}  
+Create client: POST `http://localhost:8080/api/v1/client`  
+Update client: PUT `http://localhost:8080/api/v1/client`  
+Get all client: GET `http://localhost:8080/api/v1/client`  
+Get one client: GET `http://localhost:8080/api/v1/client/{id}`  
 
-Create restaurant: POST http://localhost:8080/api/v1/restaurant  
-Update restaurant: PUT http://localhost:8080/api/v1/restaurant  
-Get all restaurant: GET http://localhost:8080/api/v1/restaurant  
-Get one restaurant: GET http://localhost:8080/api/v1/restaurant/{id}  
+Create restaurant: POST `http://localhost:8080/api/v1/restaurant`  
+Update restaurant: PUT `http://localhost:8080/api/v1/restaurant`  
+Get all restaurant: GET `http://localhost:8080/api/v1/restaurant`  
+Get one restaurant: GET `http://localhost:8080/api/v1/restaurant/{id}`  
 
-Create order: POST http://localhost:8080/api/v1/order  
-Update order: PUT http://localhost:8080/api/v1/order  
-Get all order: GET http://localhost:8080/api/v1/order  
-Get one order: GET http://localhost:8080/api/v1/order/{id}  
-Search order: GET http://localhost:8080/api/v1/order?restaurantId={id}&deliveryAfter={date}&deliveryUntil={date}  
+Create order: POST `http://localhost:8080/api/v1/order`  
+Update order: PUT `http://localhost:8080/api/v1/order`  
+Get all order: GET `http://localhost:8080/api/v1/order`  
+Get one order: GET `http://localhost:8080/api/v1/order/{id}`  
+Search order: GET `http://localhost:8080/api/v1/order?restaurantId={id}&deliveryAfter={date}&deliveryUntil={date}`  
 _* For the search order the deliveryAfter and deliveryUntil are optional
 and you can use any combination between the three params._  
 
-Get routes: GET http://localhost:8080/api/v1/routes  
+Get routes: GET `http://localhost:8080/api/v1/routes`  
 
 ## Testing info
 
-Run the app:
-mvn spring-boot:run
+Run the app:  
+```
+mvn spring-boot:run  
+```
 
-Execute unit tests:
-mvn test
+Execute unit tests:  
+```
+mvn test  
+````
 
-Create project to a IDE (i.e. Eclipse):
+Create project to a IDE (i.e. Eclipse):  
+```
 mvn eclipse:eclipse
+```
