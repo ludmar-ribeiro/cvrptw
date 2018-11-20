@@ -10,6 +10,12 @@ import com.lud.delivery.cvrptw.route.domain.route.OrderedRoute;
 import com.lud.delivery.cvrptw.route.domain.route.Route;
 import com.lud.delivery.cvrptw.route.domain.route.SubRoute;
 
+/**
+ * Point-to-point calculated route POJO
+ *
+ * @author Ludmar Ribeiro
+ *
+ */
 public class PointToPointCalculatedRoute implements CalculatedRoute {
 
     private Location origin;
